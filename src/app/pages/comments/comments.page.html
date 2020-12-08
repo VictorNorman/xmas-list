@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Comments for Gift</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let comment of comments">
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{comment.timestamp.toDate() | date:"medium"}}
+      </ion-card-subtitle>
+      <ion-card-title>
+        {{comment.message}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{dataSvc.uidToName(comment.uid)}}
+    </ion-card-content>
+  </ion-card>
+  <input type="text" [(ngModel)]="newComment" placeholder="enter comment" (keyup.enter)="addComment()">
+</ion-content>

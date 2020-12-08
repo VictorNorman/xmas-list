@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{userFirstName}} Christmas List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card class="gift-card" *ngFor="let gift of gifts; index as i">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="gift"></ion-icon>
+        {{gift.name}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-icon name="trash" (click)="delete(i)"></ion-icon>
+    <ion-card-content>
+      {{gift.info}}
+    </ion-card-content>
+    <!-- only show claimed and comments if you are looking at someone else's list -->
+    <ion-item *ngIf="! yourOwnList">
+      <ion-label>Claimed</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="gift.claimed" (ionChange)="claimedClicked(gift)"></ion-checkbox>
+    </ion-item>
+    <ion-button *ngIf="! yourOwnList" [routerLink]="'/comments/' + gift.giftid">
+      {{getNumCommentsForAGift(gift)}} comments
+    </ion-button>
+  </ion-card>
+  <ion-button (click)="addGift(uid)">
+    <ion-icon name="add"></ion-icon>
+    Add
+  </ion-button>
+
+</ion-content>

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Enter info about the gift</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-label>Name</ion-label>
+  <ion-input type="text" [(ngModel)]="name">
+  </ion-input>
+  <ion-label>Info</ion-label>
+  <ion-textarea [(ngModel)]="info">
+  </ion-textarea>
+  <ion-label>Estimated cost ($)</ion-label>
+  <ion-input type="number" [(ngModel)]="cost">
+  </ion-input>
+
+  <ion-button type="submit" (click)="addNewGift() ">Submit</ion-button>
+</ion-content>
