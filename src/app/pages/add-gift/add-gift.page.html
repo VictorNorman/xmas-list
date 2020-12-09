@@ -7,14 +7,15 @@
 <ion-content>
 
   <ion-label>Name</ion-label>
-  <ion-input type="text" [(ngModel)]="name">
+  <ion-input type="text" [(ngModel)]="name" placeholder="title for this gift">
   </ion-input>
   <ion-label>Info</ion-label>
-  <ion-textarea [(ngModel)]="info">
+  <ion-textarea [(ngModel)]="info" placeholder="info about this gift">
   </ion-textarea>
   <ion-label>Estimated cost ($)</ion-label>
   <ion-input type="number" [(ngModel)]="cost">
   </ion-input>
-
-  <ion-button type="submit" (click)="addNewGift() ">Submit</ion-button>
+  <ion-label>URL:</ion-label>
+  <ion-input placeholder="link to find more info" type="url" [(ngModel)]="url"></ion-input>
+  <ion-button expand="block" type="submit" (click)="addNewGift() ">Submit</ion-button>
 </ion-content>

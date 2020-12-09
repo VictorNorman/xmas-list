@@ -67,4 +67,8 @@ export class GiftListPage implements OnInit {
   getNumCommentsForAGift(gift: Gift): number {
     return this.dataSvc.getNumCommentsForAGift(gift.giftid);
   }
+
+  youAdded(gift: Gift): boolean {
+    return gift.whoAdded === this.authSvc.getUid();
+  }
 }

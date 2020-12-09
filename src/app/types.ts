@@ -25,6 +25,7 @@ export interface Gift {
   cost: number;           // estimated cost of gift.
   claimed: boolean;
   whoAdded: string;       // username of who added the gift to this person's list.
+  url?: string;           // a link to where to see more info about the gift.
 }
 
 

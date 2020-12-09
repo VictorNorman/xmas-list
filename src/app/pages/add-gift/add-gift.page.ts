@@ -13,6 +13,8 @@ export class AddGiftPage implements OnInit {
   public name = '';
   public info = '';
   public cost = 0;
+  public url = '';
+  public image: string | null = null;
 
   @Input() uid: string;
 
@@ -36,6 +38,7 @@ export class AddGiftPage implements OnInit {
       cost: this.cost,
       claimed: false,
       whoAdded: this.authSvc.getUid(),
+      url: this.url,
     };
     this.modal.dismiss(data);
   }
