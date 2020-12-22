@@ -1,0 +1,17 @@
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+}
+
+.space-above {
+  margin-top: 50px;
+}
+
+.group-id-text {
+  font-weight: bold;
+  font-size: large;
+}

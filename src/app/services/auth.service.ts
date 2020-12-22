@@ -39,9 +39,7 @@ export class AuthService {
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
-    console.log(JSON.stringify(credential, undefined, 2));
-    this.router.navigateByUrl('/home');
-    return this.updateUserData(credential.user);
+    this.updateUserData(credential.user);
   }
 
   private updateUserData(user: firebase.User) {
@@ -60,7 +58,7 @@ export class AuthService {
 
   async signOut() {
     await this.afAuth.signOut();
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/login');    // TODO: really shouldn't do routing from a service.
   }
 
   getUserName() {
@@ -69,5 +67,9 @@ export class AuthService {
 
   getUid() {
     return this.uid;
+  }
+
+  getPhotoUrl() {
+    return this.photoUrl;
   }
 }

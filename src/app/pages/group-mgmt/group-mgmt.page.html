@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Find your group</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="groupsLoaded">
+
+    <ion-segment (ionChange)="selectAction($event)">
+      <ion-segment-button value="select">Select</ion-segment-button>
+      <ion-segment-button value="join">Join</ion-segment-button>
+      <ion-segment-button value="create">Create</ion-segment-button>
+    </ion-segment>
+
+    <div *ngIf="action === 'join'">
+      To join a new group, enter the unique group id you have been sent.
+      <p>
+        <input type="text" placeholder="group id" [(ngModel)]="groupId">
+      </p>
+      <p>
+        <ion-button (click)="joinGroup()">Join group</ion-button>
+      </p>
+    </div>
+
+    <div *ngIf="action === 'select'">
+      <ion-item *ngIf="groups.length > 0">
+        <ion-label>Choose a group you are in</ion-label>
+        <ion-select (ionChange)="groupSelected()" [(ngModel)]="selectedGroup">
+          <ion-select-option *ngFor="let grp of groups" [value]="grp.id">
+            {{grp.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="groups.length === 0">
+        You are not yet in any groups.
+      </ion-item>
+    </div>
+  </div>
+
+  <div *ngIf="action === 'create'" class="center space-above">
+    <form>
+      <fieldset>
+        <legend>Create a new group</legend>
+        <ion-label>Enter the group name: </ion-label>
+        <input name="bogus" type="text" placeholder="e.g., Norman family" [(ngModel)]="newGroupName">
+        <ion-button (click)="createNewGroup()">Submit</ion-button>
+        <div *ngIf="newGroupId">
+          Send the following id to others so they can join this group:
+          <div class="group-id-text center">
+            {{newGroupId}}
+          </div>
+          <div>
+            Your new group, {{newGroupName}}, has been added to the dropdown list under the Select tab.
+            <br>
+            Select the group to go to it, where you can begin adding gifts to your list.
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+</ion-content>

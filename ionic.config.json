@@ -1,5 +1,7 @@
 {
   "name": "xmas-list",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

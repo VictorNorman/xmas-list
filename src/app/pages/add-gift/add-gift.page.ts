@@ -43,4 +43,8 @@ export class AddGiftPage implements OnInit {
     this.modal.dismiss(data);
   }
 
+  cancel() {
+    this.modal.dismiss(null);
+  }
+
 }

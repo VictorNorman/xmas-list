@@ -17,5 +17,6 @@
   </ion-input>
   <ion-label>URL:</ion-label>
   <ion-input placeholder="link to find more info" type="url" [(ngModel)]="url"></ion-input>
-  <ion-button expand="block" type="submit" (click)="addNewGift() ">Submit</ion-button>
+  <ion-button type="submit" (click)="addNewGift() ">Submit</ion-button>
+  <ion-button (click)="cancel()">Cancel</ion-button>
 </ion-content>

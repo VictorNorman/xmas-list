@@ -1,7 +1,49 @@
 
-.welcome-text {
-  background-image: linear-gradient(to right, red, green);
-  height: 50vw;
-  padding-left: 5vw;
-  padding-top: 10vw;
+// .welcome-text {
+  // background-image: linear-gradient(to right, red, green);
+  // height: 50vw;
+  // padding-left: 5vw;
+  // padding-top: 10vw;
+  // max-width: 500px;
+  // max-height: 500px;
+  // border-radius: 25px;
+// }
+
+// for some reason when you center a button, the inner padding on the button
+// goes down to 0px or so. This re-establishes the button height.
+ion-button {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
 }
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+}
+
+@keyframes up-and-down {
+  0% {   transform: translateY(0px);  }
+  100% {  transform: translateY(-10px); }
+}
+
+.gift-odd {
+  color: green;
+  animation-name: up-and-down;
+  animation-duration: 0.3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  animation-direction: alternate;
+}
+
+.gift-even {
+  color: red;
+  animation-name: up-and-down;
+  animation-delay: 0.3s;
+  animation-duration: 0.3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  animation-direction: alternate;
+}
+
+

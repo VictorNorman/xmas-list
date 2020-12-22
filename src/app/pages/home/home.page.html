@@ -3,17 +3,11 @@
     <ion-title>
       Christmas List Manager
     </ion-title>
+    <img class="header-img" slot="end" [src]="userPhotoUrl">
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">
-        Christmas List Manager
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <h1>Norman Family</h1>
   <div id="container">
@@ -32,7 +26,6 @@
           </ion-card-header>
         </ion-card>
       </ion-col>
-
     </ion-row>
   </ion-grid>
 </ion-content>

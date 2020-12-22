@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -13,11 +15,13 @@ const routes: Routes = [
   },
   {
     path: 'gift-list/:uid',
-    loadChildren: () => import('./pages/gift-list/gift-list.module').then(m => m.GiftListPageModule)
+    loadChildren: () => import('./pages/gift-list/gift-list.module').then(m => m.GiftListPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'add-gift',
-    loadChildren: () => import('./pages/add-gift/add-gift.module').then(m => m.AddGiftPageModule)
+    loadChildren: () => import('./pages/add-gift/add-gift.module').then(m => m.AddGiftPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -25,7 +29,16 @@ const routes: Routes = [
   },
   {
     path: 'comments/:giftid',
-    loadChildren: () => import('./pages/comments/comments.module').then(m => m.CommentsPageModule)
+    loadChildren: () => import('./pages/comments/comments.module').then(m => m.CommentsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'group-mgmt',
+    loadChildren: () => import('./pages/group-mgmt/group-mgmt.module').then(m => m.GroupMgmtPageModule)
+  },
+  {
+    path: 'group/:groupid',
+    loadChildren: () => import('./pages/group/group.module').then(m => m.GroupPageModule)
   },
 ];
 

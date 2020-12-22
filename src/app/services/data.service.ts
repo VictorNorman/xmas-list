@@ -1,8 +1,8 @@
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { Gift, UserInfo, Comment } from './types';
+import { Gift, UserInfo, Comment, UserId, Group } from '../types';
+import firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,9 @@ export class DataService {
   // filter by gift id anyway.
   public commentsSubj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  private groups: Group[] = [];
+  public groupsSubj: BehaviorSubject<Group[]> = new BehaviorSubject<Group[]>(null);
+
   constructor(
     private db: AngularFirestore,
   ) {
@@ -28,19 +31,24 @@ export class DataService {
         this.usersSubj.next(this.users);
       }
     );
-    this.db.collection<Gift>('gifts').valueChanges({ idField: 'giftid' }).subscribe(
-      gifts => {
-        this.gifts = gifts;
-      }
-    );
     this.db.collection<Comment>('comments', ref => ref.orderBy('timestamp'))
       .valueChanges().subscribe(res => {
         this.comments = res;
         this.commentsSubj.next(true);
       });
+
+    this.db.collection<Gift>('gifts').valueChanges({ idField: 'giftid' })
+      .subscribe(gifts => this.gifts = gifts);
+    this.db.collection<Group>('groups').valueChanges({ idField: 'id' })
+      .subscribe(groups => {
+        console.log('dataservice: groups now = ', groups);
+        this.groups = groups;
+        this.groupsSubj.next(this.groups);
+      });
   }
 
   addGiftToDb(gift: Gift) {
+    // TODO: catch error?
     this.db.collection<Gift>('gifts').add(gift);
   }
 
@@ -76,7 +84,7 @@ export class DataService {
     const foundIdx = this.gifts.findIndex(g => g.giftid = gift.giftid);
     if (foundIdx !== -1) {
       if (this.gifts[foundIdx].claimed !== gift.claimed) {
-        this.db.collection('gifts').doc<Gift>(`${gift.giftid}`).update({
+        this.db.collection('gifts').doc<Gift>(gift.giftid).update({
           claimed: gift.claimed,
         });
       }
@@ -97,5 +105,57 @@ export class DataService {
     return this.getComments(giftid).length;
   }
 
+
+  // ----------------------------------------- groups ------------------------------------------
+
+  addUserToGroup(userId: UserId, groupId: string) {
+    const theGroup = this.groups.find(group => group.id === groupId);
+    if (theGroup) {
+      // Complaints from transpiler about the type of arrayUnion if you don't put .ref in there.
+      this.db.collection<Group>('groups').doc(groupId).ref.update({
+        users: firebase.firestore.FieldValue.arrayUnion(userId)
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async createNewGroup(adminUid: UserId, groupName: string): Promise<string | null> {
+    const grp: Group = {
+      adminUid,
+      name: groupName,
+      users: [adminUid],
+    }
+    try {
+      console.log('createNewGroup: grp = ', JSON.stringify(grp, undefined, 2));
+      const doc = await this.db.collection<Group>('groups').add(grp);
+      return doc.id;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  /**
+   * @returns the groups the given user is in.
+   * @param userId id of the logged in user
+   */
+  getGroups(userId: UserId): Group[] {
+    return this.groups.filter(grp => grp.users.includes(userId));
+  }
+
+  getUsersByGroup(groupId: string): UserInfo[] {
+    // There will be only 1 match, so safe to do [0].
+    console.log('getUserByGrp: groupId = ', groupId)
+    const group = this.groups.find(grp => grp.id === groupId);
+    console.log('getUserByGrp: group = ', group)
+    const userIds = group.users;
+    return userIds.map(id => this.users.find(u => u.uid === id));
+  }
+
+  getGroupName(groupId: string) {
+    // There will be only 1 match, so safe to do [0].
+    return this.groups.find(grp => grp.id === groupId).name;
+  }
 }
 

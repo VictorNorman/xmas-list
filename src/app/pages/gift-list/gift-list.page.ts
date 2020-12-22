@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { DataService } from 'src/app/data.service';
+import { DataService } from 'src/app/services/data.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Gift } from 'src/app/types';
 import { AddGiftPage } from '../add-gift/add-gift.page';
@@ -15,10 +15,9 @@ export class GiftListPage implements OnInit {
 
   public uid: string;
   public userFirstName = '';
-
   public yourOwnList = false;
-
   public gifts: Gift[] = [];
+  public userPhotoUrl = '';
 
   constructor(
     private actRt: ActivatedRoute,
@@ -26,7 +25,6 @@ export class GiftListPage implements OnInit {
     private dataSvc: DataService,
     private authSvc: AuthService,
   ) {
-
   }
 
   ngOnInit() {
@@ -36,6 +34,7 @@ export class GiftListPage implements OnInit {
     this.gifts = this.yourOwnList ? this.dataSvc.getYourOwnGifts(this.uid) : this.dataSvc.getGifts(this.uid);
     // console.log('gift-listpage, gifts set to ', this.gifts);
     this.userFirstName = this.dataSvc.getUserFirstNameByUid(this.uid);
+    this.userPhotoUrl = this.authSvc.getPhotoUrl();
   }
 
 
@@ -51,8 +50,10 @@ export class GiftListPage implements OnInit {
     });
     await modal.present();
     const { data } = await modal.onDidDismiss<Gift>();
-    this.gifts.push(data);
-    this.dataSvc.addGiftToDb(data);
+    if (data) {
+      this.gifts.push(data);
+      this.dataSvc.addGiftToDb(data);
+    }
   }
 
   delete(idx: number) {
