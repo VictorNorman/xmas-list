@@ -14,12 +14,12 @@
     <ion-icon class="gift-odd" name="gift"></ion-icon>
     <ion-icon class="gift-even" name="gift"></ion-icon>
   </h1>
-  <h1 class="center">
+  <h2 class="center white-text">
     Welcome to the
-  </h1>
-  <h1 class="center">
-    Family Gift Management App
-  </h1>
+  </h2>
+  <h2 class="center white-text">
+    Gift Management App
+  </h2>
   <h1 class="center">
     <ion-icon class="gift-odd" name="gift"></ion-icon>
     <ion-icon class="gift-even" name="gift"></ion-icon>
@@ -30,6 +30,33 @@
   </h1>
   <p></p>
   <p></p>
-
-  <ion-button class="center" (click)="signIn()">Log in with your Google Account</ion-button>
+  <form #f="ngForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">User name:</ion-label>
+      <ion-input #fName="ngModel" type="text" name="text" [(ngModel)]="user.userName" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email address:</ion-label>
+      <ion-input #fName="ngModel" type="email" name="email" [(ngModel)]="user.email" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password:</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="user.password" required minlength="6">
+      </ion-input>
+      <ion-text class="password-info">
+        (must be at least 6 characters long; do not use the password you use to log in to your email account)
+      </ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-button type="submit" [disabled]="!f.valid">Log in</ion-button>
+      <ion-text class="reset-password" slot="end" detail="false" button (click)="resetPassword()">
+        Reset password
+      </ion-text>
+    </ion-item>
+    <!-- Should only enable the below if the user filled in the email. -->
+    <ion-item>
+      <ion-button [disabled]="!f.valid" (click)="createAccount()">Create new account</ion-button>
+    </ion-item>
+  </form>
+  <!-- <ion-button class="center" (click)="signIn()">Log in with your Google Account</ion-button> -->
 </ion-content>

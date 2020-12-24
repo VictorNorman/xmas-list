@@ -1,7 +1,21 @@
 
 .gift-card {
   width: 100vw;
+  margin-left: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
+
+.gift-card-red {
+  background: linear-gradient(to bottom, #ffd3d3, #ffc1c1);
+  --background: linear-gradient(to bottom, #ffd3d3, #ffc1c1);
+}
+.gift-card-green {
+  background:linear-gradient(to bottom, #c6ffc6, #98ff98);
+  --background:linear-gradient(to bottom, #c6ffc6, #98ff98);
+}
+
+
 
 .claimed-text {
   margin-right: 8px;
@@ -10,6 +24,7 @@
 .gift-url {
   color: blue;
   text-decoration: underline;
+  --background: transparent;
 }
 
 
@@ -17,4 +32,16 @@
   height: 5vh;
   margin-right: 8px;
   border-radius: 15%;
+}
+
+.gift-list {
+  background: transparent;
+}
+
+
+.gift-icon-red {
+  color: red;
+}
+.gift-icon-green {
+  color: green;
 }

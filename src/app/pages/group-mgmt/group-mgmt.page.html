@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Find your group</ion-title>
+    <ion-title>Groups</ion-title>
+    <app-user-image [in-header]="true" slot="end"></app-user-image>
   </ion-toolbar>
 </ion-header>
 
@@ -8,33 +9,54 @@
 
   <div *ngIf="groupsLoaded">
 
-    <ion-segment (ionChange)="selectAction($event)">
-      <ion-segment-button value="select">Select</ion-segment-button>
-      <ion-segment-button value="join">Join</ion-segment-button>
-      <ion-segment-button value="create">Create</ion-segment-button>
+    <ion-segment value="select" (ionChange)="selectAction($event)">
+      <ion-segment-button value="select" layout="icon-start">
+        <ion-label>Select</ion-label>
+        <ion-icon name="list-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="join" layout="icon-start">
+        <ion-label>Join</ion-label>
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="create" layout="icon-start">
+        <ion-label>
+          Create
+        </ion-label>
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-segment-button>
     </ion-segment>
 
-    <div *ngIf="action === 'join'">
-      To join a new group, enter the unique group id you have been sent.
-      <p>
-        <input type="text" placeholder="group id" [(ngModel)]="groupId">
+    <div *ngIf="action === 'join'" class="space-above">
+      <p class="center">To join a group, enter the unique group id <br>
+        sent to you by the group creator.
       </p>
-      <p>
-        <ion-button (click)="joinGroup()">Join group</ion-button>
+      <p class="center">
+        <input class="join-group-input" type="text" placeholder="group id" [(ngModel)]="groupId">
+      </p>
+      <p class="center">
+        <ion-button size="small" (click)="joinGroup()">Join group</ion-button>
       </p>
     </div>
 
-    <div *ngIf="action === 'select'">
-      <ion-item *ngIf="groups.length > 0">
-        <ion-label>Choose a group you are in</ion-label>
-        <ion-select (ionChange)="groupSelected()" [(ngModel)]="selectedGroup">
-          <ion-select-option *ngFor="let grp of groups" [value]="grp.id">
-            {{grp.name}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+    <div *ngIf="action === 'select'" class="space-above">
+      <div *ngIf="groups.length > 0">
+        <ion-radio-group [(ngModel)]="selectedGroup">
+          <ion-list-header>
+            <ion-label>Choose a group you are in</ion-label>
+          </ion-list-header>
+          <ion-item *ngFor="let grp of groups">
+            <ion-label>{{grp.name}}</ion-label>
+            <ion-radio slot="start" [value]="grp.id"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <ion-item>
+          <ion-button [disabled]="selectedGroup === ''" class="center" size="small" (click)="groupSelected()">Go to
+            group
+          </ion-button>
+        </ion-item>
+      </div>
       <ion-item *ngIf="groups.length === 0">
-        You are not yet in any groups.
+        You are not in any groups yet.
       </ion-item>
     </div>
   </div>
@@ -44,18 +66,25 @@
       <fieldset>
         <legend>Create a new group</legend>
         <ion-label>Enter the group name: </ion-label>
-        <input name="bogus" type="text" placeholder="e.g., Norman family" [(ngModel)]="newGroupName">
-        <ion-button (click)="createNewGroup()">Submit</ion-button>
+        <input class="create-group-input" name="bogus" type="text" placeholder="e.g., Norman family"
+          [(ngModel)]="newGroupName">
+        <ion-button class="create-button" size="small" (click)="createNewGroup()">Create</ion-button>
         <div *ngIf="newGroupId">
-          Send the following id to others so they can join this group:
+          <p class="center">
+            Your new group, <b>{{newGroupName}}</b>, has the unique id:
+          </p>
           <div class="group-id-text center">
             {{newGroupId}}
           </div>
-          <div>
-            Your new group, {{newGroupName}}, has been added to the dropdown list under the Select tab.
+          <p class="center">
+            You have been added to the new group and made the <br>administrator of it.
+          </p>
+          <p class="center">
+            To easily ask others to join the group, send them the unique id<br>by
+            clicking the button below.
             <br>
-            Select the group to go to it, where you can begin adding gifts to your list.
-          </div>
+            <ion-button class="center" size="small" (click)="sendIdInEmail()">Send id via email</ion-button>
+          </p>
         </div>
       </fieldset>
     </form>

@@ -14,10 +14,10 @@ import { AddGiftPage } from '../add-gift/add-gift.page';
 export class GiftListPage implements OnInit {
 
   public uid: string;
-  public userFirstName = '';
+  public userName = '';
   public yourOwnList = false;
   public gifts: Gift[] = [];
-  public userPhotoUrl = '';
+  // public userPhotoUrl = '';
 
   constructor(
     private actRt: ActivatedRoute,
@@ -33,8 +33,9 @@ export class GiftListPage implements OnInit {
     // if you are looking at your own gift list, do not show those added by others.
     this.gifts = this.yourOwnList ? this.dataSvc.getYourOwnGifts(this.uid) : this.dataSvc.getGifts(this.uid);
     // console.log('gift-listpage, gifts set to ', this.gifts);
-    this.userFirstName = this.dataSvc.getUserFirstNameByUid(this.uid);
-    this.userPhotoUrl = this.authSvc.getPhotoUrl();
+    this.userName = this.dataSvc.uidToName(this.uid);
+    console.log('gift-list: username set to ', this.userName);
+    // this.userPhotoUrl = this.authSvc.getPhotoUrl();
   }
 
 

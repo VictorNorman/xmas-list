@@ -1,9 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>
-      {{groupName}} group (id: {{groupId}})
+      {{groupName}} group
     </ion-title>
-    <img class="header-img" slot="end" [src]="userPhotoUrl">
+    <app-user-image [in-header]="true" slot="end"></app-user-image>
   </ion-toolbar>
 </ion-header>
 
@@ -19,7 +22,7 @@
           <img class="user-pic center" [src]="user.photoURL">
           <ion-card-header>
             <ion-card-title class="center">
-              {{user.userName.split(' ')[0]}}
+              {{user.userName}}
             </ion-card-title>
           </ion-card-header>
         </ion-card>
@@ -27,3 +30,8 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+<ion-footer>
+  <p class="center">
+    Group id: {{groupId}}
+  </p>
+</ion-footer>

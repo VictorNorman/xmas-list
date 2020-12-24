@@ -1,5 +1,6 @@
 import { APP_INITIALIZER, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { EmailComposer, EmailComposerOptions } from '@ionic-native/email-composer/ngx';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
@@ -27,6 +28,7 @@ export class GroupMgmtPage implements OnInit {
     private router: Router,
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController,
+    private emailComp: EmailComposer,
   ) {
     this.initialize();
   }
@@ -35,6 +37,7 @@ export class GroupMgmtPage implements OnInit {
     const ld = await this.loadCtrl.create({
       message: "Loading groups...",
       duration: 2000,
+      cssClass: 'loading-popup',
     });
     await ld.present();
     this.dataSvc.groupsSubj.subscribe(groups => {
@@ -82,6 +85,16 @@ export class GroupMgmtPage implements OnInit {
     } else {
       // toast on error.    // TODO how to get the error???
     }
+  }
+
+  async sendIdInEmail() {
+    const email: EmailComposerOptions = {
+      app: 'gmail',
+      subject: 'Join Gift Manager group',
+      isHtml: false,
+      body: `I have created a group in the Gift Manager app with the unique id ${this.newGroupId}. To join the group, you need to enter this id.`,
+    };
+    await this.emailComp.open(email)
   }
 
 }

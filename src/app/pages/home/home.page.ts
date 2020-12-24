@@ -20,7 +20,7 @@ export class HomePage {
     private dataSvc: DataService,
   ) {
     this.dataSvc.usersSubj.subscribe(u => this.users = u);
-    this.userPhotoUrl = this.authSvc.getPhotoUrl();
+    // this.userPhotoUrl = this.authSvc.getPhotoUrl();
   }
 
   goToGiftListPage(uid: number): void {

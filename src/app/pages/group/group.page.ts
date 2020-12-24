@@ -12,7 +12,7 @@ import { UserInfo } from '../../types';
 export class GroupPage implements OnInit {
 
   users: UserInfo[] = [];
-  userPhotoUrl = '';
+  // userPhotoUrl = '';
   groupId = '';
   groupName = '';
 
@@ -22,7 +22,7 @@ export class GroupPage implements OnInit {
     private dataSvc: DataService,
     private actRt: ActivatedRoute,
   ) {
-    this.userPhotoUrl = this.authSvc.getPhotoUrl();
+    // this.userPhotoUrl = this.authSvc.getPhotoUrl();
   }
 
   ngOnInit() {

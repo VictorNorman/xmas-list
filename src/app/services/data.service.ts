@@ -47,10 +47,7 @@ export class DataService {
       });
   }
 
-  addGiftToDb(gift: Gift) {
-    // TODO: catch error?
-    this.db.collection<Gift>('gifts').add(gift);
-  }
+  // --------------------------------- User info ------------------------------------
 
   getUsers() {
     return this.users;
@@ -61,7 +58,27 @@ export class DataService {
   }
 
   getUserFirstNameByUid(uid: string): string {
-    return this.uidToName(uid).split(' ')[0];
+    return this.uidToName(uid);
+  }
+
+  saveUserInfo(uid: UserId, userName: string, email: string) {
+    const data: UserInfo = {
+      uid,
+      userName,
+      email,
+      photoURL: '',
+      groups: [],
+    };
+    console.log('saveUserInfo: ', data)
+    this.db.collection<UserInfo>('users').doc(uid).set(data);
+  }
+
+
+  // -----------------------------------  Gifts -----------------------------------
+
+  addGiftToDb(gift: Gift) {
+    // TODO: catch error?
+    this.db.collection<Gift>('gifts').add(gift);
   }
 
   /**

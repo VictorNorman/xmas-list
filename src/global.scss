@@ -28,3 +28,24 @@
 * {
   font-family: 'IBM Plex Sans', sans-serif;
 }
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+}
+
+ion-content {
+  --background: url('/assets/olena-sergienko-iVnKChvQJZA-unsplash.jpg') no-repeat center/cover;
+  // background-size: cover;
+}
+
+ion-item {
+  --background: transparent;
+}
+
+.loading-popup {
+  color: black;
+}
