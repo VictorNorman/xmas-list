@@ -40,6 +40,10 @@ const routes: Routes = [
     path: 'group/:groupid',
     loadChildren: () => import('./pages/group/group.module').then(m => m.GroupPageModule)
   },
+  {
+    path: 'image-popup',
+    loadChildren: () => import('./pages/image-popup/image-popup.module').then(m => m.ImagePopupPageModule)
+  },
 ];
 
 @NgModule({

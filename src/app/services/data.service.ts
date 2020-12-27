@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { BehaviorSubject } from 'rxjs';
 import { Gift, UserInfo, Comment, UserId, Group } from '../types';
 import firebase from 'firebase/app';
@@ -24,6 +25,7 @@ export class DataService {
 
   constructor(
     private db: AngularFirestore,
+    private afStorage: AngularFireStorage,
   ) {
     this.db.collection<UserInfo>('users').valueChanges().subscribe(
       users => {
@@ -76,8 +78,17 @@ export class DataService {
 
   // -----------------------------------  Gifts -----------------------------------
 
+  /**
+   * Add the gift information to the Firebase Cloud Database and add the image to
+   * Firebase Storage.
+   * @param gift the gift
+   */
   addGiftToDb(gift: Gift) {
-    // TODO: catch error?
+    const filename = new Date().getTime() + ".jpeg";
+    const storageRef = this.afStorage.ref(filename);
+    storageRef.putString(gift.image, 'base64', { contentType: 'image/jpeg' });
+    gift.image = filename;
+
     this.db.collection<Gift>('gifts').add(gift);
   }
 
@@ -85,8 +96,16 @@ export class DataService {
    * return gifts for the given uid.
    * @param uid of the user we are getting gifts for.
    */
-  getGifts(uid: string) {
-    return this.gifts.filter(g => g.uid === uid);
+  getGifts(uid: string): Gift[] {
+    const res = this.gifts.filter(g => g.uid === uid);
+    this.getGiftImages(res);
+    return res;
+  }
+
+  private getGiftImages(giftList: Gift[]) {
+    giftList.forEach(gift => {
+      gift.imageUrl = this.afStorage.ref(gift.image).getDownloadURL();
+    });
   }
 
   /**
@@ -94,7 +113,9 @@ export class DataService {
    * @param uid of the user we are getting gifts for.
    */
   getYourOwnGifts(uid: string) {
-    return this.gifts.filter(g => g.uid === uid && g.whoAdded === uid);
+    const res = this.gifts.filter(g => g.uid === uid && g.whoAdded === uid);
+    this.getGiftImages(res);
+    return res;
   }
 
   markGiftClaimed(gift: Gift) {

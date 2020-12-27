@@ -1,3 +1,5 @@
+import { Observable } from "rxjs";
+
 export type UserId = string;
 
 export interface UserInfo {
@@ -26,6 +28,8 @@ export interface Gift {
   claimed: boolean;
   whoAdded: string;       // username of who added the gift to this person's list.
   url?: string;           // a link to where to see more info about the gift.
+  image?: string;         // an image of the gift.
+  imageUrl?: Observable<any>;      // url when the image is stored in Firebase Storage
 }
 
 

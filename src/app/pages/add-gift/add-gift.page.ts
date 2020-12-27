@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { PhotoService } from 'src/app/services/photo.service';
 import { Gift } from 'src/app/types';
 
 @Component({
@@ -15,12 +16,14 @@ export class AddGiftPage implements OnInit {
   public cost = 0;
   public url = '';
   public image: string | null = null;
+  public imageURL: string | null = null;
 
   @Input() uid: string;
 
   constructor(
     private modal: ModalController,
     private authSvc: AuthService,
+    private photoSvc: PhotoService,
   ) { }
 
   ngOnInit() {
@@ -39,12 +42,18 @@ export class AddGiftPage implements OnInit {
       claimed: false,
       whoAdded: this.authSvc.getUid(),
       url: this.url,
+      image: this.image,
     };
     this.modal.dismiss(data);
   }
 
   cancel() {
     this.modal.dismiss(null);
+  }
+
+  async takePicture() {
+    this.image = await this.photoSvc.takePicture();
+    this.imageURL = "data:image/jpeg;base64," + this.image;
   }
 
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Gift } from 'src/app/types';
 import { AddGiftPage } from '../add-gift/add-gift.page';
+import { ImagePopupPage } from '../image-popup/image-popup.page';
 
 @Component({
   selector: 'app-gift-list',
@@ -17,11 +18,11 @@ export class GiftListPage implements OnInit {
   public userName = '';
   public yourOwnList = false;
   public gifts: Gift[] = [];
-  // public userPhotoUrl = '';
 
   constructor(
     private actRt: ActivatedRoute,
-    private modal: ModalController,
+    private modalCtrl: ModalController,
+    private popCtrl: PopoverController,
     private dataSvc: DataService,
     private authSvc: AuthService,
   ) {
@@ -43,7 +44,7 @@ export class GiftListPage implements OnInit {
    * Adding a new gift for the user for the given uid.
    */
   async addGift(uid: string) {
-    const modal = await this.modal.create({
+    const modal = await this.modalCtrl.create({
       component: AddGiftPage,
       componentProps: {
         uid,
@@ -72,5 +73,24 @@ export class GiftListPage implements OnInit {
 
   youAdded(gift: Gift): boolean {
     return gift.whoAdded === this.authSvc.getUid();
+  }
+
+  makeImageUrl(imgData: string): string {
+    return "data:image/jpeg;base64," + imgData;
+  }
+
+  /**
+   * show the image of a gift in a large pop-up.
+   * @param gift the gift for which to show the image in a large popup.
+   */
+  async showLargeImage(gift: Gift) {
+    const imageAlert = await this.popCtrl.create({
+      cssClass: 'image-modal',
+      component: ImagePopupPage,
+      componentProps: {
+        gift,
+      },
+    });
+    await imageAlert.present();
   }
 }

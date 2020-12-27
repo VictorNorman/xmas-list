@@ -18,13 +18,17 @@
           <ion-card-title>
             <ion-icon class="gift-icon-red" name="gift"></ion-icon>
             {{gift.name}}
-            <ion-icon class="gift-icon-green" name="gift"></ion-icon>
           </ion-card-title>
         </ion-card-header>
         <ion-card-content>
           {{gift.info}}
           <ion-item class="gift-url" detail *ngIf="gift.url" [href]="gift.url" target="_blank">
             {{gift.url.slice(0, 30)}}
+          </ion-item>
+          <ion-item *ngIf="gift.image">
+            <ion-thumbnail>
+              <ion-img [src]="gift.imageUrl | async" (click)="showLargeImage(gift)"></ion-img>
+            </ion-thumbnail>
           </ion-item>
         </ion-card-content>
         <!-- only show claimed and comments if you are looking at someone else's list -->

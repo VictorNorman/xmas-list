@@ -29,12 +29,20 @@
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
+.space-above {
+  margin-top: 50px;
+}
+
 .center {
   margin-left: auto;
   margin-right: auto;
   display: table;
   --padding-top: 8px;
   --padding-bottom: 8px;
+}
+
+ion-toolbar {
+  color: black;
 }
 
 ion-content {
