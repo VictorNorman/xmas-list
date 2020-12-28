@@ -1,3 +1,18 @@
+// * {
+//   border: 1px solid black;
+// }
+
+.edit-delete-col {
+  padding: 0;
+
+  .edit-delete-button {
+     margin: 0;
+     --padding-start: 0;
+     --padding-end: 0;
+     --background: transparent;
+     --color: black;
+  }
+}
 
 .gift-card {
   width: 100vw;
@@ -15,7 +30,9 @@
   --background:linear-gradient(to bottom, #c6ffc6, #98ff98);
 }
 
-
+.gift-name {
+  font-size: x-large;
+}
 
 .claimed-text {
   margin-right: 8px;

@@ -40,7 +40,11 @@ export class DataService {
       });
 
     this.db.collection<Gift>('gifts').valueChanges({ idField: 'giftid' })
-      .subscribe(gifts => this.gifts = gifts);
+      .subscribe(gifts => {
+        console.log('dataService: gift list updated');
+        this.gifts = gifts;
+        console.log('gifts = ', JSON.stringify(this.gifts));
+      });
     this.db.collection<Group>('groups').valueChanges({ idField: 'id' })
       .subscribe(groups => {
         console.log('dataservice: groups now = ', groups);
@@ -82,14 +86,31 @@ export class DataService {
    * Add the gift information to the Firebase Cloud Database and add the image to
    * Firebase Storage.
    * @param gift the gift
+   * @returns giftid used in Cloud Firestore.
    */
-  addGiftToDb(gift: Gift) {
-    const filename = new Date().getTime() + ".jpeg";
-    const storageRef = this.afStorage.ref(filename);
-    storageRef.putString(gift.image, 'base64', { contentType: 'image/jpeg' });
-    gift.image = filename;
+  addGiftToDb(gift: Gift): string {
+    if (gift.image) {
+      // gift.image has the image in base64, but gets replaced with the filename of where it is stored.
+      const filename = new Date().getTime() + ".jpeg";
+      const storageRef = this.afStorage.ref(filename);
+      storageRef.putString(gift.image, 'base64', { contentType: 'image/jpeg' });
+      gift.image = filename;
+    }
 
-    this.db.collection<Gift>('gifts').add(gift);
+    gift.giftid = this.db.createId();
+
+    this.db.collection<Gift>('gifts').doc(gift.giftid).set(gift);
+    return gift.giftid;
+  }
+
+  updateGiftInDb(gift: Gift) {
+    console.log('updating giftid ', gift.giftid);
+    console.log('  image = ', gift.image);
+    const { imageUrl, ...theRest } = gift;
+    // don't say the imageUrl which is an Observable of the image in the Firebase Storage.
+    this.db.collection<Gift>('gifts').doc(gift.giftid).set({
+      ...theRest,
+    });
   }
 
   /**
@@ -127,6 +148,13 @@ export class DataService {
         });
       }
     }
+  }
+
+  deleteGift(gift: Gift) {
+    if (gift.image) {
+      this.afStorage.ref(gift.image).delete();
+    }
+    this.db.collection<Gift>('gifts').doc(gift.giftid).delete();
   }
 
   // ----------------------------------------- comments -------------------------------------------

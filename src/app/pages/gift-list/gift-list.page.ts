@@ -53,14 +53,34 @@ export class GiftListPage implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss<Gift>();
     if (data) {
+      data.giftid = this.dataSvc.addGiftToDb(data);
       this.gifts.push(data);
-      this.dataSvc.addGiftToDb(data);
+    }
+  }
+
+  /**
+   * editGift: edit an existing gift.
+   * @param gift the gift to edit
+   */
+  async editGift(gift: Gift) {
+    const modal = await this.modalCtrl.create({
+      component: AddGiftPage,
+      componentProps: {
+        inGift: gift,
+      },
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss<Gift>();
+    if (data) {
+      // this.gifts.push(data);    repalce
+      // console.log('after edit: gift = ', JSON.stringify(data, undefined, 2));
+      this.dataSvc.updateGiftInDb(data);
     }
   }
 
   delete(idx: number) {
-    this.gifts.splice(idx, 1);
-    // console.log(JSON.stringify(gift, undefined, 2));
+    const deleted = this.gifts.splice(idx, 1)[0];     // we know only one is returned so [0] is safe
+    this.dataSvc.deleteGift(deleted);
   }
 
   claimedClicked(gift: Gift) {

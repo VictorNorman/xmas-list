@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Gift } from 'src/app/types';
@@ -11,14 +12,11 @@ import { Gift } from 'src/app/types';
 })
 export class AddGiftPage implements OnInit {
 
-  public name = '';
-  public info = '';
-  public cost = 0;
-  public url = '';
-  public image: string | null = null;
-  public imageURL: string | null = null;
+  public gift: Gift;
 
+  // one of these two is provided: if uid, then adding a new gift. If inGift, then editing a gift.
   @Input() uid: string;
+  @Input() inGift: Gift;
 
   constructor(
     private modal: ModalController,
@@ -27,24 +25,26 @@ export class AddGiftPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // editing a gift;
+    if (this.inGift) {
+      this.gift = this.inGift;
+    } else {
+      this.gift = {
+        name: '',
+        info: '',
+        cost: 0,
+        url: '',
+        image: null,
+        imageUrl: null,
+        claimed: false,
+        uid: this.uid,
+        whoAdded: this.authSvc.getUid(),
+      };
+    }
   }
 
-  /**
-   * A new gift entered into the system.
-   * @param giftFor who the gift is for -- by userId.   TODO
-   */
   addNewGift() {
-    const data: Gift = {
-      uid: this.uid,
-      name: this.name,
-      info: this.info,
-      cost: this.cost,
-      claimed: false,
-      whoAdded: this.authSvc.getUid(),
-      url: this.url,
-      image: this.image,
-    };
-    this.modal.dismiss(data);
+    this.modal.dismiss(this.gift);
   }
 
   cancel() {
@@ -52,8 +52,8 @@ export class AddGiftPage implements OnInit {
   }
 
   async takePicture() {
-    this.image = await this.photoSvc.takePicture();
-    this.imageURL = "data:image/jpeg;base64," + this.image;
+    this.gift.image = await this.photoSvc.takePicture();
+    // this.imageURL = "data:image/jpeg;base64," + this.image;
   }
 
 }

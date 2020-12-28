@@ -12,39 +12,62 @@
 
   <ion-list lines="none" class="gift-list">
     <ion-item *ngFor="let gift of gifts; index as i">
-      <!-- nth-child() not working -- probably due to shadow dom -->
+      <!-- nth-child() not working for alternating colors -- probably due to shadow dom -->
       <ion-card class="gift-card" [ngClass]="{ 'gift-card-red': i % 2 === 0,  'gift-card-green': i % 2 === 1}">
-        <ion-card-header>
-          <ion-card-title>
-            <ion-icon class="gift-icon-red" name="gift"></ion-icon>
-            {{gift.name}}
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          {{gift.info}}
-          <ion-item class="gift-url" detail *ngIf="gift.url" [href]="gift.url" target="_blank">
-            {{gift.url.slice(0, 30)}}
-          </ion-item>
-          <ion-item *ngIf="gift.image">
-            <ion-thumbnail>
-              <ion-img [src]="gift.imageUrl | async" (click)="showLargeImage(gift)"></ion-img>
-            </ion-thumbnail>
-          </ion-item>
-        </ion-card-content>
-        <!-- only show claimed and comments if you are looking at someone else's list -->
-        <ion-buttons>
-          <!-- seems weird to make this a button, but doing so made all the heights the same -->
-          <ion-button slot="start" fill="outline" *ngIf="! yourOwnList">
-            <ion-text class="claimed-text">Claimed</ion-text>
-            <ion-checkbox [(ngModel)]="gift.claimed" (ionChange)="claimedClicked(gift)"></ion-checkbox>
-          </ion-button>
-          <ion-button fill="outline" *ngIf="! yourOwnList" [routerLink]="'/comments/' + gift.giftid">
-            {{getNumCommentsForAGift(gift)}} comments
-          </ion-button>
-          <ion-button *ngIf="youAdded(gift)" (click)="delete(i)">
-            <ion-icon slot="end" name="trash"></ion-icon>
-          </ion-button>
-        </ion-buttons>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-icon class="gift-icon-red" name="gift"></ion-icon>
+              <ion-text class="gift-name">{{gift.name}}</ion-text>
+            </ion-col>
+            <ion-col size="auto" class="edit-delete-col">
+              <ion-button class="edit-delete-button" *ngIf="youAdded(gift)" (click)="editGift(gift)">
+                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="auto" class="edit-delete-col">
+              <ion-button class="edit-delete-button" *ngIf="youAdded(gift)" (click)="delete(i)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="gift.info">
+            <ion-col>
+              {{gift.info}}
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="gift.url">
+            <ion-col>
+              <ion-item class="gift-url" detail [href]="gift.url" target="_blank">
+                {{gift.url.slice(0, 30)}}
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="gift.image">
+            <ion-col>
+              <ion-thumbnail>
+                <ion-img [src]="gift.imageUrl | async" (click)="showLargeImage(gift)"></ion-img>
+              </ion-thumbnail>
+            </ion-col>
+          </ion-row>
+
+          <!-- only show claimed and comments if you are looking at someone else's list -->
+          <ion-row *ngIf="! yourOwnList">
+            <ion-buttons>
+              <!-- seems weird to make this a button, but doing so made all the heights the same -->
+              <ion-button slot="start" fill="outline">
+                <ion-text class="claimed-text">Claimed</ion-text>
+                <ion-checkbox [(ngModel)]="gift.claimed" (ionChange)="claimedClicked(gift)"></ion-checkbox>
+              </ion-button>
+              <ion-button fill="outline" [routerLink]="'/comments/' + gift.giftid">
+                {{getNumCommentsForAGift(gift)}} comments
+              </ion-button>
+            </ion-buttons>
+          </ion-row>
+
+        </ion-grid>
       </ion-card>
     </ion-item>
   </ion-list>
