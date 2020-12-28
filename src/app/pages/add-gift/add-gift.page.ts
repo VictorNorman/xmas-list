@@ -27,17 +27,17 @@ export class AddGiftPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // editing a gift;
     if (this.inGift) {
+      // editing a gift;
       this.gift = this.inGift;
     } else {
+      // adding a new gift.
       this.gift = {
         name: '',
         info: '',
         cost: 0,
         url: '',
-        image: null,
-        imageUrl: null,
+        imageFilename: null,
         claimed: false,
         uid: this.uid,
         whoAdded: this.authSvc.getUid(),
@@ -54,13 +54,19 @@ export class AddGiftPage implements OnInit {
   }
 
   async takePicture() {
-    this.gift.image = await this.photoSvc.takePicture();
-    // this.imageURL = "data:image/jpeg;base64," + this.image;
+    this.gift.imageData = await this.photoSvc.takePicture();
   }
 
+  /**
+   * delete the old image file from the server and take a new picture.
+   */
   async replacePicture() {
     this.dataSvc.deleteImage(this.gift);
-    this.gift.image = await this.photoSvc.takePicture();
+    this.gift.imageData = await this.photoSvc.takePicture();
+  }
+
+  addJpegPrefix(data: string): string {
+    return "data:image/jpeg;base64," + data;
   }
 
 }

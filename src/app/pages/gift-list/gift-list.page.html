@@ -45,10 +45,12 @@
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="gift.image">
+          <ion-row *ngIf="gift.imageFilename">
             <ion-col>
               <ion-thumbnail>
-                <ion-img [src]="gift.imageUrl | async" (click)="showLargeImage(gift)"></ion-img>
+                <ion-img [src]="gift.imageData ? makeImageUrl(gift.imageData) : (gift.imageUrl | async)"
+                  (click)="showLargeImage(gift)">
+                </ion-img>
               </ion-thumbnail>
             </ion-col>
           </ion-row>

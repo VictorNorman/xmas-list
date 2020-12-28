@@ -24,11 +24,11 @@
     <ion-label position="floating">URL:</ion-label>
     <ion-input placeholder="link to find more info" type="url" [(ngModel)]="gift.url"></ion-input>
   </ion-item>
-  <div *ngIf="gift.image">
-    <img class="gift-image center" [src]="gift.imageUrl | async">
+  <div *ngIf="gift.imageData">
+    <img class="gift-image center" [src]="gift.imageData ? addJpegPrefix(gift.imageData) : (gift.imageUrl | async)">
     <ion-button class="center" (click)="replacePicture()">Replace Photo</ion-button>
   </div>
-  <div *ngIf="! gift.image">
+  <div *ngIf="! gift.imageData">
     <ion-button size="small" class="center" (click)="takePicture()">Take Photo</ion-button>
   </div>
   <div>

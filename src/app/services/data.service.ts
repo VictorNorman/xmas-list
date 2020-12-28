@@ -89,28 +89,43 @@ export class DataService {
    * @returns giftid used in Cloud Firestore.
    */
   addGiftToDb(gift: Gift): string {
-    if (gift.image) {
-      // gift.image has the image in base64, but gets replaced with the filename of where it is stored.
-      const filename = new Date().getTime() + ".jpeg";
-      const storageRef = this.afStorage.ref(filename);
-      storageRef.putString(gift.image, 'base64', { contentType: 'image/jpeg' });
-      gift.image = filename;
-    }
+    this.saveGiftImage(gift);
 
     gift.giftid = this.db.createId();
-
-    this.db.collection<Gift>('gifts').doc(gift.giftid).set(gift);
+    this.saveGift(gift);
     return gift.giftid;
+  }
+
+  private saveGift(gift) {
+    // cute trick to get a new object, theRest, without imageUrl, imageData in it.
+    const { imageUrl, imageData, ...theRest } = gift;
+    // don't save the imageUrl which is an Observable of the image in the Firebase Storage.
+    this.db.collection<Gift>('gifts').doc(gift.giftid).set({
+      ...theRest,
+    });
   }
 
   updateGiftInDb(gift: Gift) {
     console.log('updating giftid ', gift.giftid);
-    console.log('  image = ', gift.image);
-    const { imageUrl, ...theRest } = gift;
-    // don't say the imageUrl which is an Observable of the image in the Firebase Storage.
-    this.db.collection<Gift>('gifts').doc(gift.giftid).set({
-      ...theRest,
-    });
+    console.log('  imageFilename = ', gift.imageFilename);
+    this.saveGiftImage(gift);
+    this.saveGift(gift);
+  }
+
+  private async saveGiftImage(gift: Gift) {
+    if (gift.imageData) {
+      // gift.imageData has the image in base64.
+      const filename = new Date().getTime() + ".jpeg";
+      const storageRef = this.afStorage.ref(filename);
+      gift.imageFilename = filename;
+      storageRef.putString(gift.imageData, 'base64', { contentType: 'image/jpeg' }).then(done => {
+        console.log('saveGiftImage: putString done, imageFilname now', filename);
+        storageRef.getDownloadURL().subscribe(url => {
+          console.log('saveGiftImage: imageUrl now set.');
+          gift.imageUrl = url;
+        });
+      });
+    }
   }
 
   /**
@@ -125,7 +140,7 @@ export class DataService {
 
   private getGiftImages(giftList: Gift[]) {
     giftList.forEach(gift => {
-      gift.imageUrl = this.afStorage.ref(gift.image).getDownloadURL();
+      gift.imageUrl = this.afStorage.ref(gift.imageFilename).getDownloadURL();
     });
   }
 
@@ -156,9 +171,10 @@ export class DataService {
   }
 
   deleteImage(gift) {
-    if (gift.image) {
-      this.afStorage.ref(gift.image).delete();
-      gift.image = null;
+    if (gift.imageFilename) {
+      this.afStorage.ref(gift.imageFilename).delete();
+      gift.imageFilename = null;
+      gift.imageData = null;
     }
   }
 
