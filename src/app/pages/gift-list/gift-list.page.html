@@ -55,16 +55,21 @@
 
           <!-- only show claimed and comments if you are looking at someone else's list -->
           <ion-row *ngIf="! yourOwnList">
-            <ion-buttons>
-              <!-- seems weird to make this a button, but doing so made all the heights the same -->
-              <ion-button slot="start" fill="outline">
-                <ion-text class="claimed-text">Claimed</ion-text>
-                <ion-checkbox [(ngModel)]="gift.claimed" (ionChange)="claimedClicked(gift)"></ion-checkbox>
-              </ion-button>
-              <ion-button fill="outline" [routerLink]="'/comments/' + gift.giftid">
-                {{getNumCommentsForAGift(gift)}} comments
-              </ion-button>
-            </ion-buttons>
+            <ion-col>
+              Est cost: {{gift.cost}}
+            </ion-col>
+            <!-- seems weird to make this a button, but doing so made all the heights the same -->
+            <ion-col size="auto">
+              <ion-buttons>
+                <ion-button slot="start" fill="outline">
+                  <ion-text class="claimed-text">Claimed</ion-text>
+                  <ion-checkbox [(ngModel)]="gift.claimed" (ionChange)="claimedClicked(gift)"></ion-checkbox>
+                </ion-button>
+                <ion-button fill="outline" [routerLink]="'/comments/' + gift.giftid">
+                  {{getNumCommentsForAGift(gift)}} comments
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
           </ion-row>
 
         </ion-grid>

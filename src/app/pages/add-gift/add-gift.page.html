@@ -5,19 +5,34 @@
 </ion-header>
 
 <ion-content>
-  <ion-label>Name</ion-label>
-  <ion-input type="text" [(ngModel)]="gift.name" placeholder="title for this gift">
-  </ion-input>
-  <ion-label>Info</ion-label>
-  <ion-textarea [(ngModel)]="gift.info" placeholder="info about this gift">
-  </ion-textarea>
-  <ion-label>Estimated cost ($)</ion-label>
-  <ion-input type="number" [(ngModel)]="gift.cost">
-  </ion-input>
-  <img *ngIf="gift.image" [src]="gift.imageUrl | async">
-  <ion-label>URL:</ion-label>
-  <ion-input placeholder="link to find more info" type="url" [(ngModel)]="gift.url"></ion-input>
-  <ion-button type="submit" (click)="addNewGift() ">Submit</ion-button>
-  <ion-button (click)="cancel()">Cancel</ion-button>
-  <ion-button (click)="takePicture()">Take Picture</ion-button>
+  <ion-item>
+    <ion-label position="floating">Name</ion-label>
+    <ion-input type="text" [(ngModel)]="gift.name" placeholder="title for this gift">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Info</ion-label>
+    <ion-textarea [(ngModel)]="gift.info" placeholder="info about this gift">
+    </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Estimated cost ($)</ion-label>
+    <ion-input type="number" [(ngModel)]="gift.cost">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">URL:</ion-label>
+    <ion-input placeholder="link to find more info" type="url" [(ngModel)]="gift.url"></ion-input>
+  </ion-item>
+  <div *ngIf="gift.image">
+    <img class="gift-image center" [src]="gift.imageUrl | async">
+    <ion-button class="center" (click)="replacePicture()">Replace Photo</ion-button>
+  </div>
+  <div *ngIf="! gift.image">
+    <ion-button size="small" class="center" (click)="takePicture()">Take Photo</ion-button>
+  </div>
+  <div>
+    <ion-button size="small" type="submit" (click)="addNewGift() ">Submit</ion-button>
+    <ion-button size="small" (click)="cancel()">Cancel</ion-button>
+  </div>
 </ion-content>

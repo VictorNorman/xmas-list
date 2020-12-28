@@ -151,10 +151,15 @@ export class DataService {
   }
 
   deleteGift(gift: Gift) {
+    this.deleteImage(gift);
+    this.db.collection<Gift>('gifts').doc(gift.giftid).delete();
+  }
+
+  deleteImage(gift) {
     if (gift.image) {
       this.afStorage.ref(gift.image).delete();
+      gift.image = null;
     }
-    this.db.collection<Gift>('gifts').doc(gift.giftid).delete();
   }
 
   // ----------------------------------------- comments -------------------------------------------

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataService } from 'src/app/services/data.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Gift } from 'src/app/types';
 
@@ -22,6 +23,7 @@ export class AddGiftPage implements OnInit {
     private modal: ModalController,
     private authSvc: AuthService,
     private photoSvc: PhotoService,
+    private dataSvc: DataService,
   ) { }
 
   ngOnInit() {
@@ -54,6 +56,11 @@ export class AddGiftPage implements OnInit {
   async takePicture() {
     this.gift.image = await this.photoSvc.takePicture();
     // this.imageURL = "data:image/jpeg;base64," + this.image;
+  }
+
+  async replacePicture() {
+    this.dataSvc.deleteImage(this.gift);
+    this.gift.image = await this.photoSvc.takePicture();
   }
 
 }
