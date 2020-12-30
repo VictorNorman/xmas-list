@@ -19,12 +19,9 @@
     <ion-row>
       <ion-col size="4" *ngFor="let user of users">
         <ion-card class="user-card" (click)="goToGiftListPage(user.uid)">
-          <img class="user-pic center" [src]="user.photoURL">
-          <ion-card-header>
-            <ion-card-title class="center">
-              {{user.userName}}
-            </ion-card-title>
-          </ion-card-header>
+          <ion-card-content class="center">
+            {{user.userName}}
+          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>

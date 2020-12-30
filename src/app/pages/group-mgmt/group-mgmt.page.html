@@ -61,48 +61,55 @@
     </div>
   </div>
 
-  <div *ngIf="action === 'create'" class="center space-above">
+  <div *ngIf="action === 'create'" class="space-above">
     <form #f="ngForm">
       <ion-list-header>Create a new group / event</ion-list-header>
-      <ion-item>
-        <ion-label><span class="required-field">*</span>Enter the group name: </ion-label>
-        <input #fName="ngModel" class="create-group-input" name="groupName" type="text"
-          placeholder="e.g., Susan birthday" [(ngModel)]="newGroupName" required>
-      </ion-item>
-      <ion-item>
-        <ion-label><span class="required-field">*</span>Enter the date of the event: </ion-label>
-        <ion-datetime #fName="ngModel" name="datetime" placeholder="date" displayFormat="MMM DD YYYY" max="2030"
-          [(ngModel)]="groupEventDate" required>
-        </ion-datetime>
-      </ion-item>
-      <ion-item>
-        The group will be deleted 3 days after the event. A participant's gift list will be
-        removed if the participant is only in this group.
-      </ion-item>
-      <ion-item>
-        <ion-label>Do not delete the group ever:</ion-label>
-        <ion-checkbox></ion-checkbox>
-      </ion-item>
-      <ion-button *ngIf="! newGroupId" [disabled]="!f.valid" class="create-button" size="small"
-        (click)="createNewGroup()">Create
-      </ion-button>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label><span class="required-field">*</span>Group name: </ion-label>
+          <input #fName="ngModel" class="create-group-input" name="groupName" type="text"
+            placeholder="e.g., Susan birthday" [(ngModel)]="newGroupName" required>
+        </ion-item>
+        <ion-item>
+          <ion-label><span class="required-field">*</span>Date of the event: </ion-label>
+          <ion-datetime #fName="ngModel" name="datetime" placeholder="date" displayFormat="MMM DD YYYY" max="2030"
+            [(ngModel)]="groupEventDate" required>
+          </ion-datetime>
+        </ion-item>
+        <ion-item>
+          The group will be deleted 3 days after the event. A participant's gift list will be
+          removed if the participant is only in this group.
+        </ion-item>
+        <ion-item>
+          <ion-label>Do not delete the group ever:</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-button *ngIf="! newGroupId" [disabled]="!f.valid" class="center" size="small" (click)="createNewGroup()">
+            Create
+          </ion-button>
+        </ion-item>
+      </ion-list>
+
       <div *ngIf="newGroupId">
-        <ion-item class="center">
-          Your new group,&nbsp;<b>{{newGroupName}}</b>, has the unique id:
-        </ion-item>
-        <ion-item class="group-id-text center">
-          {{newGroupId}}
-        </ion-item>
-        <ion-item class="center">
-          You have been added to the new group and <br>made the administrator of it.
-        </ion-item>
-        <ion-item class="center">
-          To easily ask others to join the group, <br>send them the unique id by<br>
-          clicking the button below.
-        </ion-item>
-        <ion-item class="center">
-          <ion-button class="center" size="small" (click)="sendIdInEmail()">Send id via email</ion-button>
-        </ion-item>
+        <ion-list lines="none">
+          <ion-item class="center">
+            Your new group,&nbsp;<b>{{newGroupName}}</b>, has the unique id:
+          </ion-item>
+          <ion-item class="group-id-text center">
+            {{newGroupId}}
+          </ion-item>
+          <ion-item class="center">
+            You have been added to the new group and <br>made the administrator of it.
+          </ion-item>
+          <ion-item class="center">
+            To easily ask others to join the group, <br>send them the unique id by<br>
+            clicking the button below.
+          </ion-item>
+          <ion-item class="center">
+            <ion-button class="center" size="small" (click)="sendIdInEmail()">Send id via email</ion-button>
+          </ion-item>
+        </ion-list>
       </div>
     </form>
   </div>
