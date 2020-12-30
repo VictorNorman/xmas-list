@@ -27,15 +27,15 @@
     </ion-segment>
 
     <div *ngIf="action === 'join'" class="space-above">
-      <p class="center">To join a group, enter the unique group id <br>
-        sent to you by the group creator.
-      </p>
-      <p class="center">
+      <ion-item class="center">To join a group, enter the unique group id <br>
+        sent to you by the group administrator.
+      </ion-item>
+      <ion-item class="center">
         <input class="join-group-input" type="text" placeholder="group id" [(ngModel)]="groupId">
-      </p>
-      <p class="center">
+      </ion-item>
+      <ion-item class="center">
         <ion-button size="small" (click)="joinGroup()">Join group</ion-button>
-      </p>
+      </ion-item>
     </div>
 
     <div *ngIf="action === 'select'" class="space-above">
@@ -62,13 +62,30 @@
   </div>
 
   <div *ngIf="action === 'create'" class="center space-above">
-    <form>
+    <form #f="ngForm">
       <fieldset>
-        <legend>Create a new group</legend>
-        <ion-label>Enter the group name: </ion-label>
-        <input class="create-group-input" name="bogus" type="text" placeholder="e.g., Norman family"
-          [(ngModel)]="newGroupName">
-        <ion-button class="create-button" size="small" (click)="createNewGroup()">Create</ion-button>
+        <legend>Create a new group / event</legend>
+        <ion-item>
+          <ion-label><span class="required-field">*</span>Enter the group name: </ion-label>
+          <input #fName="ngModel" class="create-group-input" name="groupName" type="text"
+            placeholder="e.g., Susan birthday" [(ngModel)]="newGroupName" required>
+        </ion-item>
+        <ion-item>
+          <ion-label><span class="required-field">*</span>Enter the date of the event: </ion-label>
+          <ion-datetime #fName="ngModel" name="datetime" placeholder="date" displayFormat="MMM DD YYYY" max="2030"
+            [(ngModel)]="groupEventDate" required>
+          </ion-datetime>
+        </ion-item>
+        <ion-item>
+          The group will be deleted 3 days after the event. A participant's gift list will be
+          removed if the participant is only in this group.
+        </ion-item>
+        <ion-item>
+          <ion-label>Do not delete the group ever:</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-button [disabled]="!f.valid" class="create-button" size="small" (click)="createNewGroup()">Create
+        </ion-button>
         <div *ngIf="newGroupId">
           <p class="center">
             Your new group, <b>{{newGroupName}}</b>, has the unique id:
@@ -77,10 +94,10 @@
             {{newGroupId}}
           </div>
           <p class="center">
-            You have been added to the new group and made the <br>administrator of it.
+            You have been added to the new group and <br>made the administrator of it.
           </p>
           <p class="center">
-            To easily ask others to join the group, send them the unique id<br>by
+            To easily ask others to join the group, <br>send them the unique id by<br>
             clicking the button below.
             <br>
             <ion-button class="center" size="small" (click)="sendIdInEmail()">Send id via email</ion-button>

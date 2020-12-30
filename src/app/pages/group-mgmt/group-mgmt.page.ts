@@ -1,17 +1,20 @@
-import { APP_INITIALIZER, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmailComposer, EmailComposerOptions } from '@ionic-native/email-composer/ngx';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { Group } from 'src/app/types';
+import { endOfDay, addDays, parseISO } from 'date-fns';
 
+
+const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
 @Component({
   selector: 'app-group-mgmt',
   templateUrl: './group-mgmt.page.html',
   styleUrls: ['./group-mgmt.page.scss'],
 })
-export class GroupMgmtPage implements OnInit {
+export class GroupMgmtPage {
 
   public groups: Group[] = [];
   public groupId = '';
@@ -21,6 +24,8 @@ export class GroupMgmtPage implements OnInit {
   public selectedGroup = '';
   public groupsLoaded = false;
   public action = 'select';
+  public groupEventDate = null;
+  public keepEventForever = false;
 
   constructor(
     private authSvc: AuthService,
@@ -52,30 +57,36 @@ export class GroupMgmtPage implements OnInit {
   }
 
   selectAction(event) {
-    console.log('event = ', event.detail.value);
+    // console.log('event = ', event.detail.value);
     this.action = event.detail.value;
   }
 
-  ngOnInit() {
-  }
-
   groupSelected() {
-    console.log('selectedGrp = ', this.selectedGroup);
     this.router.navigateByUrl(`/group/${this.selectedGroup}`);
   }
 
-  joinGroup(): void {
+  async joinGroup(): Promise<void> {
     if (this.dataSvc.addUserToGroup(this.authSvc.getUid(), this.groupId)) {
       this.router.navigateByUrl(`/group/${this.groupId}`);
+    } else {
+      await (await this.toastCtrl.create({
+        message: `The group with the given id does not exist.`,
+        duration: 3000,
+      })).present();
     }
   }
 
   async createNewGroup() {
+
+    const date = parseISO(this.groupEventDate);
+    console.log('this.groupEventDate = ', this.groupEventDate, ' is type of ', typeof this.groupEventDate);
     if (!this.newGroupName) {
       return;
     }
-    console.log('getUid is', this.authSvc.getUid());
-    this.newGroupId = await this.dataSvc.createNewGroup(this.authSvc.getUid(), this.newGroupName);
+
+    const endDate = this.keepEventForever ? addDays(new Date(), 10000) : addDays(endOfDay(date), DAYS_PAST_EVENT_TO_HOLD_DATA);
+
+    this.newGroupId = await this.dataSvc.createNewGroup(this.authSvc.getUid(), this.newGroupName, endDate);
     if (this.newGroupId) {
       // toast to show success.
       await (await this.toastCtrl.create({
@@ -83,7 +94,10 @@ export class GroupMgmtPage implements OnInit {
         duration: 3000,
       })).present();
     } else {
-      // toast on error.    // TODO how to get the error???
+      await (await this.toastCtrl.create({
+        message: `Group ${this.newGroupName} could not be created.`,
+        duration: 3000,
+      })).present();
     }
   }
 
@@ -94,7 +108,7 @@ export class GroupMgmtPage implements OnInit {
       isHtml: false,
       body: `I have created a group in the Gift Manager app with the unique id ${this.newGroupId}. To join the group, you need to enter this id.`,
     };
-    await this.emailComp.open(email)
+    await this.emailComp.open(email);
   }
 
 }

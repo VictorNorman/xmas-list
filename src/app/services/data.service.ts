@@ -208,14 +208,15 @@ export class DataService {
     }
   }
 
-  async createNewGroup(adminUid: UserId, groupName: string): Promise<string | null> {
+  async createNewGroup(adminUid: UserId, groupName: string, endDate: Date): Promise<string | null> {
     const grp: Group = {
       adminUid,
       name: groupName,
       users: [adminUid],
+      endDate,
     }
     try {
-      console.log('createNewGroup: grp = ', JSON.stringify(grp, undefined, 2));
+      // console.log('createNewGroup: grp = ', JSON.stringify(grp, undefined, 2));
       const doc = await this.db.collection<Group>('groups').add(grp);
       return doc.id;
     } catch (error) {

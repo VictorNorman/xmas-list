@@ -1,5 +1,14 @@
+.required-field {
+  color: red;
+}
 
-
+// the fields (group name, event date) are indented too much
+// without the following.
+fieldset {
+  ion-item {
+    --padding-start: 0;
+  }
+}
 
 
 .group-id-text {

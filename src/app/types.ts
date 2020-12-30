@@ -16,6 +16,7 @@ export interface Group {
   adminUid: UserId;    // uid of admin user
   name: string;        // name of the group, e.g., "Norman family"
   users: UserId[];     // members' uids
+  endDate: Date;
 }
 
 // A gift in a person's list (indicated by userId)

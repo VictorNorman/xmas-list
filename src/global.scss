@@ -47,11 +47,16 @@ ion-toolbar {
 
 ion-content {
   --background: url('/assets/olena-sergienko-iVnKChvQJZA-unsplash.jpg') no-repeat center/cover;
-  // background-size: cover;
 }
 
-ion-item {
-  --background: transparent;
+// Allow the background to show through, but put a little gray in so you can see the
+// text better.
+ion-item, ion-list-header, ion-footer {
+  --background: rgb(33, 33, 33, 0.8);
+}
+
+ion-footer {
+  color: white;
 }
 
 .loading-popup {
