@@ -10,10 +10,12 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
+import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import { firebaseConfig } from './credentials';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import 'firebase/storage';
+import { AdmobService } from './services/admob.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import 'firebase/storage';
     StatusBar,
     SplashScreen,
     EmailComposer,
+    AdMobFree,
+    AdmobService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

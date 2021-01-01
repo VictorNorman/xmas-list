@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { Group } from 'src/app/types';
 import { endOfDay, addDays, parseISO } from 'date-fns';
+import { AdMobFreeInterstitial } from '@ionic-native/admob-free/ngx';
+import { AdmobService } from 'src/app/services/admob.service';
 
 
 const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
@@ -34,6 +36,7 @@ export class GroupMgmtPage {
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController,
     private emailComp: EmailComposer,
+    private admobSvc: AdmobService,
   ) {
     this.initialize();
   }
@@ -54,6 +57,10 @@ export class GroupMgmtPage {
     });
     await ld.onDidDismiss();
     this.groupsLoaded = true;
+  }
+
+  ionViewWillEnter() {
+    this.admobSvc.showBanner();
   }
 
   selectAction(event) {
