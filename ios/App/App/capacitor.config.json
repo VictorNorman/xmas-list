@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "xmas-list",
+  "appId": "com.norman.vic",
+  "appName": "Gifty",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

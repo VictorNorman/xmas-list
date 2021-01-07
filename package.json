@@ -1,7 +1,7 @@
 {
-  "name": "xmas-list",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "name": "Gifty",
+  "version": "0.1",
+  "author": "Victor Norman",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -49,6 +49,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "cordova-res": "^0.15.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
