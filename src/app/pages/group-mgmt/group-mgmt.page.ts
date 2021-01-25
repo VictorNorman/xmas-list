@@ -103,7 +103,7 @@ export class GroupMgmtPage {
 
   async sendIdInEmail() {
     const email: EmailComposerOptions = {
-      app: 'gmail',
+      // app: 'gmail',
       subject: 'Join Gift Manager group',
       isHtml: false,
       body: `I have created a group in the Gift Manager app with the unique id ${this.newGroupId}. To join the group, you need to enter this id.`,

@@ -46,7 +46,14 @@ ion-toolbar {
 }
 
 ion-content {
-  --background: url('/assets/olena-sergienko-iVnKChvQJZA-unsplash.jpg') no-repeat center/cover;
+  // Workaround for issue related to css varialbes
+  // being recalculated with DOM changes
+  // https://github.com/ionic-team/ionic-framework/issues/17494
+  // https://github.com/ionic-team/ionic-framework/issues/16678
+  &::part(background) {
+    background: url('/assets/olena-sergienko-iVnKChvQJZA-unsplash.jpg') no-repeat center/cover;
+  }
+  // --background: url('/assets/olena-sergienko-iVnKChvQJZA-unsplash.jpg') no-repeat center/cover;
 }
 
 // Allow the background to show through, but put a little gray in so you can see the
@@ -61,4 +68,10 @@ ion-footer {
 
 .loading-popup {
   color: black;
+}
+
+// For the ion-datetime on the create page,
+// if we don't do this, it is white on white.
+ion-picker {
+  --ion-text-color: black !important;
 }
