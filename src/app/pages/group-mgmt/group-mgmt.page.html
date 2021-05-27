@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Groups</ion-title>
-    <app-user-image [in-header]="true" slot="end"></app-user-image>
+  <ion-toolbar class="group-mgmt-page-toolbar">
+    <ion-title size="small">Group Management</ion-title>
+    <!-- <app-user-image [in-header]="true" slot="end"></app-user-image> -->
   </ion-toolbar>
 </ion-header>
 
@@ -28,8 +28,8 @@
     </ion-segment>
 
     <div *ngIf="action === 'join'" class="space-above">
-      <ion-item class="center">To join a group, enter the unique group id <br>
-        sent to you by the group administrator.
+      <ion-item class="ion-text-wrap ion-text-start">To join a group, enter the unique group id sent to you by the group
+        administrator.
       </ion-item>
       <ion-item class="center">
         <input class="join-group-input" type="text" placeholder="group id" [(ngModel)]="groupId">
@@ -45,12 +45,12 @@
           <ion-list-header>
             <ion-label>Choose a group you are in</ion-label>
           </ion-list-header>
-          <ion-item *ngFor="let grp of groups">
+          <ion-item *ngFor="let grp of groups" lines="none">
             <ion-label>{{grp.name}}</ion-label>
             <ion-radio slot="start" [value]="grp.id"></ion-radio>
           </ion-item>
         </ion-radio-group>
-        <ion-item>
+        <ion-item lines="none">
           <ion-button [disabled]="selectedGroup === ''" class="center" size="small" (click)="groupSelected()">Go to
             group
           </ion-button>
@@ -67,17 +67,17 @@
       <ion-list-header>Create a new group / event</ion-list-header>
       <ion-list lines="none">
         <ion-item>
-          <ion-label><span class="required-field">*</span>Group name: </ion-label>
-          <input #fName="ngModel" class="create-group-input" name="groupName" type="text"
-            placeholder="e.g., Susan birthday" [(ngModel)]="newGroupName" required>
+          <ion-label position="floating">*Group name (e.g., Susan's birthday):</ion-label>
+          <ion-input #fName="ngModel" class="create-group-input" name="groupName" type="text" [(ngModel)]="newGroupName"
+            required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label><span class="required-field">*</span>Date of the event: </ion-label>
+          <ion-label>Date of the event:</ion-label>
           <ion-datetime #fName="ngModel" name="datetime" placeholder="date" displayFormat="MMM DD YYYY" max="2030"
             [(ngModel)]="groupEventDate" required>
           </ion-datetime>
         </ion-item>
-        <ion-item>
+        <ion-item class="ion-text-wrap ion-text-start">
           The group will be deleted 3 days after the event. A participant's gift list will be
           removed if the participant is only in this group.
         </ion-item>

@@ -72,6 +72,28 @@ ion-footer {
 
 // For the ion-datetime on the create page,
 // if we don't do this, it is white on white.
-ion-picker {
-  --ion-text-color: black !important;
+ion-picker * {
+  // --ion-text-color: black !important;
+  color: black !important;
+}
+
+ion-button {
+  --background: rgb(210, 247, 210);
+  --background-activated: rgb(210, 247, 210);
+  color: black;
+}
+
+ion-radio::part(mark) {
+  --color-checked: rgb(210, 247, 210);
+}
+
+ion-checkbox::part(container) {
+  --checkmark-color: black;
+  --background-checked: rgb(210, 247, 210);
+}
+
+
+
+ion-back-button {
+  color: black;
 }

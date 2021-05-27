@@ -1,6 +1,3 @@
-.required-field {
-  color: red;
-}
 
 // the fields (group name, event date) are indented too much
 // without the following.
@@ -20,15 +17,21 @@ ion-list {
   font-size: large;
 }
 
-ion-icon, ion-segment-button {
-  color: green;
+ion-icon .segment-button-checked {
+  color: black;
 }
 
 ion-list-header {
   color: inherit;
 }
 
-.create-group-input, .join-group-input {
+.join-group-input {
   color: black;
 }
+.group-mgmt-page-toolbar {
+  --background: rgb(210, 247, 210);
+}
 
+ion-segment-button {
+  --color: white;
+}

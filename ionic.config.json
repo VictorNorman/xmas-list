@@ -1,7 +1,8 @@
 {
-  "name": "Gifty",
+  "name": "Gift Xchangr",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
