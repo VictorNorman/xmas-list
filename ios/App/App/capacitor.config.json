@@ -1,6 +1,6 @@
 {
   "appId": "com.norman.vic",
-  "appName": "Gifty",
+  "appName": "Gift Lists Cap Config",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
