@@ -14,3 +14,7 @@ cp resources/android/icon/xhdpi-foreground.png android/app/src/main/res/mipmap-x
 
 cp resources/android/icon/mdpi-foreground.png android/app/src/main/res/mipmap-mdpi/ic_launcher.png
 cp resources/android/icon/mdpi-foreground.png android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png
+
+# Create splash screens
+cordova-res android --copy --skip-config --verbose --type splash
+
