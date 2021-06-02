@@ -17,7 +17,7 @@ ion-list {
   font-size: large;
 }
 
-ion-icon .segment-button-checked {
+.ios.segment-button-checked {
   color: black;
 }
 
@@ -25,7 +25,7 @@ ion-list-header {
   color: inherit;
 }
 
-.join-group-input {
+.join-group-input, .create-group-input {
   color: black;
 }
 .group-mgmt-page-toolbar {
