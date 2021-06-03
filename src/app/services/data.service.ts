@@ -41,13 +41,13 @@ export class DataService {
 
     this.db.collection<Gift>('gifts').valueChanges({ idField: 'giftid' })
       .subscribe(gifts => {
-        console.log('dataService: gift list updated');
+        // console.log('dataService: gift list updated');
         this.gifts = gifts;
-        console.log('gifts = ', JSON.stringify(this.gifts));
+        // console.log('gifts = ', JSON.stringify(this.gifts));
       });
     this.db.collection<Group>('groups').valueChanges({ idField: 'id' })
       .subscribe(groups => {
-        console.log('dataservice: groups now = ', groups);
+        // console.log('dataservice: groups now = ', groups);
         this.groups = groups;
         this.groupsSubj.next(this.groups);
       });
@@ -195,16 +195,17 @@ export class DataService {
 
   // ----------------------------------------- groups ------------------------------------------
 
-  addUserToGroup(userId: UserId, groupId: string) {
-    const theGroup = this.groups.find(group => group.id === groupId);
+  // add the user to the group with the given group name. Return the groupid from firebase.
+  addUserToGroup(userId: UserId, groupName: string): string | null {
+    const theGroup = this.groups.find(group => group.name === groupName);
     if (theGroup) {
       // Complaints from transpiler about the type of arrayUnion if you don't put .ref in there.
-      this.db.collection<Group>('groups').doc(groupId).ref.update({
+      this.db.collection<Group>('groups').doc(theGroup.id).ref.update({
         users: firebase.firestore.FieldValue.arrayUnion(userId)
       });
-      return true;
+      return theGroup.id;
     } else {
-      return false;
+      return null;
     }
   }
 
@@ -218,7 +219,7 @@ export class DataService {
     try {
       // console.log('createNewGroup: grp = ', JSON.stringify(grp, undefined, 2));
       const doc = await this.db.collection<Group>('groups').add(grp);
-      return doc.id;
+      return groupName;
     } catch (error) {
       return null;
     }
@@ -234,9 +235,9 @@ export class DataService {
 
   getUsersByGroup(groupId: string): UserInfo[] {
     // There will be only 1 match, so safe to do [0].
-    console.log('getUserByGrp: groupId = ', groupId)
+    // console.log('getUserByGrp: groupId = ', groupId)
     const group = this.groups.find(grp => grp.id === groupId);
-    console.log('getUserByGrp: group = ', group)
+    // console.log('getUserByGrp: group = ', group)
     const userIds = group.users;
     return userIds.map(id => this.users.find(u => u.uid === id));
   }
@@ -244,6 +245,10 @@ export class DataService {
   getGroupName(groupId: string) {
     // There will be only 1 match, so safe to do [0].
     return this.groups.find(grp => grp.id === groupId).name;
+  }
+
+  doesGroupNameExist(grpName: string): boolean {
+    return !!(this.groups.find(group => group.name === grpName));
   }
 }
 

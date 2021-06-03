@@ -28,13 +28,13 @@
     </ion-segment>
 
     <div *ngIf="action === 'join'" class="space-above">
-      <ion-item class="ion-text-wrap ion-text-start">To join a group, enter the unique group id sent to you by the group
-        administrator.
+      <ion-item class="ion-text-wrap ion-text-start">
+        To join a group, enter the unique group name sent to you by the group creator.
       </ion-item>
-      <ion-item class="center">
-        <input class="join-group-input" type="text" placeholder="group id" [(ngModel)]="groupId">
+      <ion-item class="center" lines="none">
+        <input class="join-group-input" type="text" placeholder="group id" [(ngModel)]="joinGroupName">
       </ion-item>
-      <ion-item class="center">
+      <ion-item class="center" lines="none">
         <ion-button size="small" (click)="joinGroup()">Join group</ion-button>
       </ion-item>
     </div>
@@ -50,7 +50,7 @@
             <ion-radio slot="start" [value]="grp.id"></ion-radio>
           </ion-item>
         </ion-radio-group>
-        <ion-item lines="none">
+        <ion-item>
           <ion-button [disabled]="selectedGroup === ''" class="center" size="small" (click)="groupSelected()">Go to
             group
           </ion-button>
@@ -97,17 +97,10 @@
 
       <div *ngIf="newGroupId">
         <ion-list lines="none">
-          <ion-item class="center">
-            Your new group,&nbsp;<b>{{newGroupName}}</b>, has the unique id:
-          </ion-item>
-          <ion-item class="group-id-text center">
-            {{newGroupId}}
-          </ion-item>
-          <ion-item class="center">
-            You have been added to the new group and <br>made the administrator of it.
-          </ion-item>
-          <ion-item class="center">
-            To easily ask others to join the group, <br>send them the unique id by<br>
+          <ion-item>
+            Your new group, {{newGroupName}}, has been created.
+            You have been added to the new group and made the administrator of it.
+            To easily ask others to join the group, send them the group name by
             clicking the button below.
           </ion-item>
           <ion-item class="center">

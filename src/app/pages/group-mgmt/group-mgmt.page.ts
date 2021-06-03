@@ -17,7 +17,7 @@ const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
 export class GroupMgmtPage {
 
   public groups: Group[] = [];
-  public groupId = '';
+  public joinGroupName = '';
   public newGroupName = '';
   public newGroupId = '';
   public feedback = '';
@@ -66,11 +66,12 @@ export class GroupMgmtPage {
   }
 
   async joinGroup(): Promise<void> {
-    if (this.dataSvc.addUserToGroup(this.authSvc.getUid(), this.groupId)) {
-      this.router.navigateByUrl(`/group/${this.groupId}`);
+    const id = this.dataSvc.addUserToGroup(this.authSvc.getUid(), this.joinGroupName)
+    if (id) {
+      this.router.navigateByUrl(`/group/${id}`);
     } else {
       await (await this.toastCtrl.create({
-        message: `The group with the given id does not exist.`,
+        message: `The group with the given name does not exist.`,
         duration: 3000,
       })).present();
     }
@@ -79,8 +80,15 @@ export class GroupMgmtPage {
   async createNewGroup() {
 
     const date = parseISO(this.groupEventDate);
-    console.log('this.groupEventDate = ', this.groupEventDate, ' is type of ', typeof this.groupEventDate);
+    // console.log('this.groupEventDate = ', this.groupEventDate, ' is type of ', typeof this.groupEventDate);
     if (!this.newGroupName) {
+      return;
+    }
+    if (this.dataSvc.doesGroupNameExist(this.newGroupName)) {
+      await (await this.toastCtrl.create({
+        message: `Group ${this.newGroupName} already exists. Please choose another name.`,
+        duration: 3000,
+      })).present();
       return;
     }
 
