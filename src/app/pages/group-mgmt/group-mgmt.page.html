@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar class="group-mgmt-page-toolbar">
-    <ion-title size="small">Group Management</ion-title>
+    <ion-title>Gift Event Management</ion-title>
     <!-- <app-user-image [in-header]="true" slot="end"></app-user-image> -->
   </ion-toolbar>
 </ion-header>
@@ -29,13 +29,13 @@
 
     <div *ngIf="action === 'join'" class="space-above">
       <ion-item class="ion-text-wrap ion-text-start">
-        To join a group, enter the unique group name sent to you by the group creator.
+        To join an event, enter the unique event name sent to you by the event creator.
       </ion-item>
       <ion-item class="center" lines="none">
         <input class="join-group-input" type="text" placeholder="group id" [(ngModel)]="joinGroupName">
       </ion-item>
       <ion-item class="center" lines="none">
-        <ion-button size="small" (click)="joinGroup()">Join group</ion-button>
+        <ion-button size="small" (click)="joinGroup()">Join event</ion-button>
       </ion-item>
     </div>
 
@@ -43,7 +43,7 @@
       <div *ngIf="groups.length > 0">
         <ion-radio-group [(ngModel)]="selectedGroup">
           <ion-list-header>
-            <ion-label>Choose a group you are in</ion-label>
+            <ion-label>Choose a gift event you are in</ion-label>
           </ion-list-header>
           <ion-item *ngFor="let grp of groups" lines="none">
             <ion-label>{{grp.name}}</ion-label>
@@ -51,28 +51,28 @@
           </ion-item>
         </ion-radio-group>
         <ion-item>
-          <ion-button [disabled]="selectedGroup === ''" class="center" size="small" (click)="groupSelected()">Go to
-            group
+          <ion-button [disabled]="selectedGroup === ''" class="center" size="small" (click)="groupSelected()">
+            Go to gift event
           </ion-button>
         </ion-item>
       </div>
       <ion-item *ngIf="groups.length === 0">
-        You are not in any groups yet.
+        You are not in any gift events yet.
       </ion-item>
     </div>
   </div>
 
   <div *ngIf="action === 'create'" class="space-above">
     <form #f="ngForm">
-      <ion-list-header>Create a new group / event:</ion-list-header>
+      <ion-list-header>Create a new gift event:</ion-list-header>
       <ion-list lines="none">
         <ion-item>
-          <ion-label>*Group name:</ion-label>
+          <ion-label>*Gift event name:</ion-label>
         </ion-item>
 
         <ion-item>
-          <input #fName="ngModel" class="create-group-input" name="groupName" type="text"
-            placeholder="e.g., Susan's bday" [(ngModel)]="newGroupName" required>
+          <input #fName="ngModel" class="create-group-input" name="groupName" type="text" placeholder="Norman Xmas 2021"
+            [(ngModel)]="newGroupName" required>
         </ion-item>
         <ion-item>
           <ion-label>*Date of the event:</ion-label>
@@ -81,11 +81,11 @@
           </ion-datetime>
         </ion-item>
         <ion-item class="ion-text-wrap ion-text-start">
-          The group will be deleted 3 days after the event. A users's gift list will be
-          removed if the user is only in this group, or ...
+          The gift event will be deleted 3 days after the event. A users's gift list will be
+          removed if the user is only in this one event, or ...
         </ion-item>
         <ion-item>
-          <ion-label>Never delete the group:</ion-label>
+          <ion-label>Never delete the event and its users' lists:</ion-label>
           <ion-checkbox></ion-checkbox>
         </ion-item>
         <ion-item>
@@ -98,9 +98,9 @@
       <div *ngIf="newGroupId">
         <ion-list lines="none">
           <ion-item>
-            Your new group, {{newGroupName}}, has been created.
-            You have been added to the new group and made the administrator of it.
-            To easily ask others to join the group, send them the group name by
+            Your new event, {{newGroupName}}, has been created.
+            You have been added to the new event and made the administrator of it.
+            To easily ask others to join the event, send them the event name by
             clicking the button below.
           </ion-item>
           <ion-item class="center">

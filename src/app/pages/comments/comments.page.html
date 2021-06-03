@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="comments-page-toolbar">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content #content>
   <ion-card class="comment-card" *ngFor="let comment of comments">
     <ion-card-header>
       <ion-card-subtitle>
@@ -23,7 +23,7 @@
   </ion-card>
   <ion-item lines="none">
     <ion-icon name="chatbubbles-outline"></ion-icon>
-    <input class="enter-comment" type="text" [(ngModel)]="newComment" placeholder="Add your thoughts here"
-      (keyup.enter)="addComment()">
+    <ion-input class="enter-comment" enterkeyhint="done" type="text" [(ngModel)]="newComment" size="18"
+      placeholder="Add your thoughts here" (keyup.enter)="addComment()"></ion-input>
   </ion-item>
 </ion-content>
