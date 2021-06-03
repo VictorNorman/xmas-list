@@ -50,7 +50,7 @@ export class GroupMgmtPage {
         return;
       }
       this.groups = groups.filter(grp => grp.users.includes(this.authSvc.getUid()));
-      console.log('gpmt: this.groups =', this.groups)
+      // console.log('gpmt: this.groups =', this.groups)
     });
     await ld.onDidDismiss();
     this.groupsLoaded = true;

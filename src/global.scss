@@ -68,6 +68,7 @@ ion-footer {
 
 .loading-popup {
   color: black;
+  --spinner-color: black;
 }
 
 // For the ion-datetime on the create page,
@@ -91,8 +92,6 @@ ion-checkbox::part(container) {
   --checkmark-color: black;
   --background-checked: rgb(210, 247, 210);
 }
-
-
 
 ion-back-button {
   color: black;
