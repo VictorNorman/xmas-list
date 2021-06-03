@@ -5,7 +5,7 @@
 }
 
 .user-card {
-  --background: rgb(210, 247, 210);
+  --background: var(--greenish);
   margin-left: 0px;
   margin-right: 0px;
 }
@@ -32,8 +32,4 @@ ion-card-title {
 
 .add-margin-right {
   margin-right: 4vw;
-}
-
-.group-page-toolbar {
-  --background: rgb(210, 247, 210);
 }

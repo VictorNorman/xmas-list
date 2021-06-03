@@ -44,6 +44,10 @@ const routes: Routes = [
     path: 'image-popup',
     loadChildren: () => import('./pages/image-popup/image-popup.module').then(m => m.ImagePopupPageModule)
   },
+  {
+    path: 'about',
+    loadChildren: () => import('./about/about.module').then(m => m.AboutPageModule)
+  },
 ];
 
 @NgModule({

@@ -6,7 +6,6 @@
     <ion-title>
       {{groupName}}
     </ion-title>
-    <!-- <app-user-image [in-header]="true" slot="end"></app-user-image> -->
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +19,7 @@
       <ion-col size="4" *ngFor="let user of users">
         <ion-card class="user-card" (click)="goToGiftListPage(user.uid)">
           <ion-card-content class="center">
-            {{user.userName}}
+            {{user.uid == authSvc.getUid() ? "My list": user.userName}}
           </ion-card-content>
         </ion-card>
       </ion-col>

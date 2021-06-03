@@ -22,7 +22,6 @@ export class GroupPage implements OnInit {
     private dataSvc: DataService,
     private actRt: ActivatedRoute,
   ) {
-    // this.userPhotoUrl = this.authSvc.getPhotoUrl();
   }
 
   ngOnInit() {
@@ -32,7 +31,7 @@ export class GroupPage implements OnInit {
     this.dataSvc.groupsSubj.subscribe(grps => {
       // Whenever a group gets changed, see if there is a new user in this group.
       this.users = this.dataSvc.getUsersByGroup(this.groupId)
-      console.log('grouppage: users = ', this.users);
+      // console.log('grouppage: users = ', this.users);
     });
   }
 

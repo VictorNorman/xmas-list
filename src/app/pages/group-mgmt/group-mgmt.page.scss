@@ -28,10 +28,12 @@ ion-list-header {
 .join-group-input, .create-group-input {
   color: black;
 }
-.group-mgmt-page-toolbar {
-  --background: rgb(210, 247, 210);
-}
 
 ion-segment-button {
   --color: white;
+}
+
+// put the About button aligned on the right side of the viewport
+.about-div {
+  float: right;
 }

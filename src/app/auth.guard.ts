@@ -14,14 +14,14 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('Authguard.canActivate(): hello');
+    // console.log('Authguard.canActivate(): hello');
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user: firebase.User) => {
         if (user) {
-          console.log('User is logged in!!');
+          // console.log('User is logged in!!');
           resolve(true);
         } else {
-          console.log('User is not logged in -- putting them back on the login page');
+          // console.log('User is not logged in -- putting them back on the login page');
           this.router.navigateByUrl('login');
           resolve(false);
         }

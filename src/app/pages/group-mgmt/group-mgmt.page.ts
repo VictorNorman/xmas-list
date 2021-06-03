@@ -40,7 +40,7 @@ export class GroupMgmtPage {
 
   async initialize() {
     const ld = await this.loadCtrl.create({
-      message: "Loading groups...",
+      message: "Loading gift events...",
       duration: 2000,
       cssClass: 'loading-popup',
     });
@@ -118,5 +118,11 @@ export class GroupMgmtPage {
     };
     await this.emailComp.open(email);
   }
+
+  goToAboutPage() {
+    this.router.navigateByUrl(`/about`);
+  }
+
+
 
 }

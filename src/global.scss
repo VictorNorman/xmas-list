@@ -43,6 +43,7 @@
 
 ion-toolbar {
   color: black;
+  --background: var(--greenish);
 }
 
 ion-content {
@@ -69,6 +70,7 @@ ion-footer {
 .loading-popup {
   color: black;
   --spinner-color: black;
+  --background: var(--greenish);
 }
 
 // For the ion-datetime on the create page,
@@ -79,18 +81,18 @@ ion-picker * {
 }
 
 ion-button {
-  --background: rgb(210, 247, 210);
-  --background-activated: rgb(210, 247, 210);
+  --background: var(--greenish);
+  --background-activated: var(--greenish);
   color: black;
 }
 
 ion-radio::part(mark) {
-  --color-checked: rgb(210, 247, 210);
+  --color-checked: var(--greenish);
 }
 
 ion-checkbox::part(container) {
   --checkmark-color: black;
-  --background-checked: rgb(210, 247, 210);
+  --background-checked: var(--greenish);
 }
 
 ion-back-button {

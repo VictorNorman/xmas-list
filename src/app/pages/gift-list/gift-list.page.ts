@@ -33,10 +33,8 @@ export class GiftListPage implements OnInit {
     this.yourOwnList = this.uid === this.authSvc.getUid();
     // if you are looking at your own gift list, do not show those added by others.
     this.gifts = this.yourOwnList ? this.dataSvc.getYourOwnGifts(this.uid) : this.dataSvc.getGifts(this.uid);
-    // console.log('gift-listpage, gifts set to ', this.gifts);
     this.userName = this.dataSvc.uidToName(this.uid);
     console.log('gift-list: username set to ', this.userName);
-    // this.userPhotoUrl = this.authSvc.getPhotoUrl();
   }
 
 
