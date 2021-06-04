@@ -43,7 +43,11 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit() {
-    this.loading = await this.loadingCtrl.create();
+
+    this.loading = await this.loadingCtrl.create({
+      message: "Logging in...",
+      cssClass: 'loading-popup',
+    });
     await this.loading.present();
     try {
       const res = await this.authSvc.loginUser(this.user.userName, this.user.email, this.user.password);
