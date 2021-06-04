@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmailComposer, EmailComposerOptions } from '@ionic-native/email-composer/ngx';
 import { LoadingController, ToastController } from '@ionic/angular';
@@ -7,6 +7,8 @@ import { DataService } from 'src/app/services/data.service';
 import { Group } from 'src/app/types';
 import { endOfDay, addDays, parseISO } from 'date-fns';
 
+import { AdMobPlus, BannerAd } from '@admob-plus/capacitor';
+
 
 const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
 @Component({
@@ -14,7 +16,7 @@ const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
   templateUrl: './group-mgmt.page.html',
   styleUrls: ['./group-mgmt.page.scss'],
 })
-export class GroupMgmtPage {
+export class GroupMgmtPage implements OnInit {
 
   public groups: Group[] = [];
   public joinGroupName = '';
@@ -54,6 +56,18 @@ export class GroupMgmtPage {
     });
     await ld.onDidDismiss();
     this.groupsLoaded = true;
+  }
+
+  async ngOnInit() {
+    await AdMobPlus.start();
+    const banner = new BannerAd({
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    });
+    await banner.show()
+
+    // AdMobPlus.addListener('banner.impression', async () => {
+    //   await banner.hide()
+    // })
   }
 
   selectAction(event) {
