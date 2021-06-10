@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Gift Lists Cap Config</string>
-    <string name="title_activity_main">Gift Lists Cap Config</string>
-    <string name="package_name">com.norman.vic</string>
-    <string name="custom_url_scheme">com.norman.vic</string>
+    <string name="app_name">Gift Lists</string>
+    <string name="title_activity_main">Gift Lists</string>
+    <string name="package_name">edu.calvincs.norman.victor.giftlists</string>
+    <string name="custom_url_scheme">edu.calvincs.norman.victor.giftlists</string>
 </resources>

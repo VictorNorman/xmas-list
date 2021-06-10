@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmailComposer, EmailComposerOptions } from '@ionic-native/email-composer/ngx';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { Group } from 'src/app/types';
@@ -36,6 +36,7 @@ export class GroupMgmtPage implements OnInit {
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController,
     private emailComp: EmailComposer,
+    public plat: Platform,
   ) {
     this.initialize();
   }

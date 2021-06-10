@@ -1,6 +1,8 @@
 
 # Make icon.png point to the android version
-ln -s resources/logo-nobackground-5000-android.png resources/icon.png
+cd resources
+ln -s logo-nobackground-5000-android.png icon.png
+cd ..
 cp resources/icon.png resources/android/icon-foreground.png
 
 cp resources/android/icon/hdpi-foreground.png android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png
@@ -25,6 +27,8 @@ cordova-res android --copy --skip-config --verbose --type splash
 rm resource/icon.png
 
 # IOS
-ln -s resources/logo-nobackground-5000-ios.png resources/icon.png
+cd resources
+ln -s logo-nobackground-5000-ios.png icon.png
+cd ..
 cordova-res ios --copy --skip-config --verbose --type icon
 

@@ -1,4 +1,4 @@
-package com.norman.vic;
+package edu.calvincs.norman.victor.giftlists;
 
 import com.getcapacitor.BridgeActivity;
 
