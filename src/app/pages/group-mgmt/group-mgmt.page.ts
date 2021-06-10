@@ -62,7 +62,8 @@ export class GroupMgmtPage implements OnInit {
   async ngOnInit() {
     await AdMobPlus.start();
     const banner = new BannerAd({
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      // test id: 'ca-app-pub-3940256099942544/6300978111',
+      adUnitId: 'ca-app-pub-2105599790569352/1601213907',
     });
     await banner.show()
 
