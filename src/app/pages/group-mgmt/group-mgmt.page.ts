@@ -8,6 +8,7 @@ import { Group } from 'src/app/types';
 import { endOfDay, addDays, parseISO } from 'date-fns';
 
 import { AdMobPlus, BannerAd } from '@admob-plus/capacitor';
+import { NONE_TYPE } from '@angular/compiler';
 
 
 const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
@@ -73,7 +74,13 @@ export class GroupMgmtPage implements OnInit {
   }
 
   selectAction(event) {
-    // console.log('event = ', event.detail.value);
+    // When switching *back* to "create", clear the newGroupId, newGroupName, so that we don't display
+    // the feedback from the last time a group was created.
+    if (this.action === 'create') {
+      this.newGroupId = '';
+      this.newGroupName = '';
+      this.groupEventDate = null;
+    }
     this.action = event.detail.value;
   }
 
