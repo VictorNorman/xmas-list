@@ -155,7 +155,7 @@ export class DataService {
   }
 
   markGiftClaimed(gift: Gift) {
-    const foundIdx = this.gifts.findIndex(g => g.giftid = gift.giftid);
+    const foundIdx = this.gifts.findIndex(g => g.giftid === gift.giftid);
     if (foundIdx !== -1) {
       if (this.gifts[foundIdx].claimed !== gift.claimed) {
         this.db.collection('gifts').doc<Gift>(gift.giftid).update({

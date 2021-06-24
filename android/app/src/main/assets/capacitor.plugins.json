@@ -1,0 +1,10 @@
+[
+	{
+		"pkg": "@admob-plus/capacitor",
+		"classpath": "admob.plus.capacitor.AdMobPlusPlugin"
+	},
+	{
+		"pkg": "@capacitor/camera",
+		"classpath": "com.capacitorjs.plugins.camera.CameraPlugin"
+	}
+]

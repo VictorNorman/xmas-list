@@ -1,6 +1,6 @@
 {
-  "appId": "com.norman.vic",
-  "appName": "Gift Lists Cap Config",
+  "appId": "edu.calvincs.norman.victor.giftlists",
+  "appName": "Gift Lists",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

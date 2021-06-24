@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmailComposer, EmailComposerOptions } from '@ionic-native/email-composer/ngx';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { Group } from 'src/app/types';
 import { endOfDay, addDays, parseISO } from 'date-fns';
+
+import { AdMobPlus, BannerAd } from '@admob-plus/capacitor';
+import { NONE_TYPE } from '@angular/compiler';
 
 
 const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
@@ -14,7 +17,7 @@ const DAYS_PAST_EVENT_TO_HOLD_DATA = 3;
   templateUrl: './group-mgmt.page.html',
   styleUrls: ['./group-mgmt.page.scss'],
 })
-export class GroupMgmtPage {
+export class GroupMgmtPage implements OnInit {
 
   public groups: Group[] = [];
   public joinGroupName = '';
@@ -34,6 +37,7 @@ export class GroupMgmtPage {
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController,
     private emailComp: EmailComposer,
+    public plat: Platform,
   ) {
     this.initialize();
   }
@@ -56,8 +60,27 @@ export class GroupMgmtPage {
     this.groupsLoaded = true;
   }
 
+  async ngOnInit() {
+    await AdMobPlus.start();
+    const banner = new BannerAd({
+      // test id: 'ca-app-pub-3940256099942544/6300978111',
+      adUnitId: 'ca-app-pub-2105599790569352/1601213907',
+    });
+    await banner.show()
+
+    // AdMobPlus.addListener('banner.impression', async () => {
+    //   await banner.hide()
+    // })
+  }
+
   selectAction(event) {
-    // console.log('event = ', event.detail.value);
+    // When switching *back* to "create", clear the newGroupId, newGroupName, so that we don't display
+    // the feedback from the last time a group was created.
+    if (this.action === 'create') {
+      this.newGroupId = '';
+      this.newGroupName = '';
+      this.groupEventDate = null;
+    }
     this.action = event.detail.value;
   }
 
