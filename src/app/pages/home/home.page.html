@@ -1,31 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Christmas List Manager
+      PWA App store submission request
     </ion-title>
     <!-- <img class="header-img" slot="end" [src]="userPhotoUrl"> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-  <h1>Norman Family</h1>
-  <div id="container">
-    Select a person to see their gift list
-  </div>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="4" *ngFor="let user of users">
-        <ion-card class="user-card" (click)="goToGiftListPage(user.uid)">
-          <img class="user-pic center" [src]="user.photoURL">
-          <ion-card-header>
-            <ion-card-title class="center">
-              {{user.userName.split(' ')[0]}}
-            </ion-card-title>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <h1>PWA App store submission request</h1>
 </ion-content>

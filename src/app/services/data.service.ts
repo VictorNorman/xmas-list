@@ -43,7 +43,6 @@ export class DataService {
       .subscribe(gifts => {
         // console.log('dataService: gift list updated');
         this.gifts = gifts;
-        // console.log('gifts = ', JSON.stringify(this.gifts));
       });
     this.db.collection<Group>('groups').valueChanges({ idField: 'id' })
       .subscribe(groups => {
@@ -52,6 +51,7 @@ export class DataService {
         this.groupsSubj.next(this.groups);
       });
   }
+
 
   // --------------------------------- User info ------------------------------------
 
@@ -138,6 +138,7 @@ export class DataService {
     return res;
   }
 
+
   private getGiftImages(giftList: Gift[]) {
     giftList.forEach(gift => {
       gift.imageUrl = this.afStorage.ref(gift.imageFilename).getDownloadURL();
@@ -154,15 +155,11 @@ export class DataService {
     return res;
   }
 
-  markGiftClaimed(gift: Gift) {
-    const foundIdx = this.gifts.findIndex(g => g.giftid === gift.giftid);
-    if (foundIdx !== -1) {
-      if (this.gifts[foundIdx].claimed !== gift.claimed) {
-        this.db.collection('gifts').doc<Gift>(gift.giftid).update({
-          claimed: gift.claimed,
-        });
-      }
-    }
+  markGiftClaimed(gift: Gift, claimedBy: UserId) {
+    this.db.collection('gifts').doc<Gift>(gift.giftid).update({
+      claimed: gift.claimed,
+      claimedBy: gift.claimed ? claimedBy : null,  // mark who claimed it, or clear if unclaimed.
+    });
   }
 
   deleteGift(gift: Gift) {

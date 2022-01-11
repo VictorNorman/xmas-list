@@ -64,7 +64,7 @@
               <ion-buttons>
                 <ion-button slot="start" fill="outline">
                   <ion-text class="claimed-text">Claimed</ion-text>
-                  <ion-checkbox [(ngModel)]="gift.claimed" (ionChange)="claimedClicked(gift)"></ion-checkbox>
+                  <ion-checkbox [(ngModel)]="gift.claimed" (ionChange)="claimedClicked(gift)" [disabled]="claimedCheckboxDisabled(gift)" ></ion-checkbox>
                 </ion-button>
                 <ion-button fill="outline" [routerLink]="'/comments/' + gift.giftid">
                   {{getNumCommentsForAGift(gift)}} comments

@@ -34,7 +34,7 @@ export class GiftListPage implements OnInit {
     // if you are looking at your own gift list, do not show those added by others.
     this.gifts = this.yourOwnList ? this.dataSvc.getYourOwnGifts(this.uid) : this.dataSvc.getGifts(this.uid);
     this.userName = this.dataSvc.uidToName(this.uid);
-    console.log('gift-list: username set to ', this.userName);
+    // console.log('gift-list: username set to ', this.userName);
   }
 
 
@@ -82,8 +82,15 @@ export class GiftListPage implements OnInit {
   }
 
   claimedClicked(gift: Gift) {
-    this.dataSvc.markGiftClaimed(gift);
+    this.dataSvc.markGiftClaimed(gift, this.authSvc.getUid());
   }
+
+  // The checkbox is disabled if the gift is claimed and claimed by someone else.
+  claimedCheckboxDisabled(gift: Gift) {
+    // console.log(`gift: ${gift.giftid}: claimed ${gift.claimed} && claimedBy = ${gift.claimedBy} cf. ${this.authSvc.getUid()}`);
+    return gift.claimed && gift.claimedBy !== this.authSvc.getUid();
+  }
+
 
   getNumCommentsForAGift(gift: Gift): number {
     return this.dataSvc.getNumCommentsForAGift(gift.giftid);

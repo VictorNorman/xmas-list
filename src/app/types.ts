@@ -27,6 +27,7 @@ export interface Gift {
   info: string;
   cost: number;           // estimated cost of gift.
   claimed: boolean;
+  claimedBy?: UserId;      // new field, not
   whoAdded: string;       // username of who added the gift to this person's list.
   url?: string;           // a link to where to see more info about the gift.
   imageFilename?: string;      // the name of the file on Firebase Storage
